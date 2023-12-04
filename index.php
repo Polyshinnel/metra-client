@@ -11,6 +11,6 @@ error_reporting($container->get('dev_mode') ? E_ALL : 0); // E_ALL - отобр�
 
 $container->get(Database::class);
 
-$app = (require __DIR__.'./bootstrap/app.php')($container);
+$app = (require __DIR__.'/./bootstrap/app.php')($container);
 
 $app->run();

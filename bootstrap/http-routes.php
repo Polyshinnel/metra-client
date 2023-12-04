@@ -20,7 +20,10 @@ return static function (App $app): void {
     $app->get('/forgotten-password', [ForgottenPage::class, 'get']);
     $app->get('/forgotten-password-change', [ForgottenPage::class, 'change']);
     $app->get('/err-restore', [ForgottenPage::class, 'error']);
+    $app->get('/success-restore-request', [ForgottenPage::class, 'successRequest']);
     $app->get('/success-restore', [ForgottenPage::class, 'success']);
+    $app->post('/restore-request', [ForgottenPage::class, 'request']);
+
 
 
     $app->group('/',function (RouteCollectorProxy $group) {

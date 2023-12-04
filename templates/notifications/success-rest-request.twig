@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/style.css">
+    <title>ЛК Метра | Запрос на сброс пароля</title>
+</head>
+<body>
+<div class="w-full h-full absolute top-0 left-0 flex justify-center items-center">
+    <div class="info-register-block flex flex-col items-center">
+        <img src="/assets/img/logo-b.svg" class="w-48" alt="">
+        <div class="info-register-block__line mt-10 flex items-center">
+            <img src="/assets/img/success.svg" alt="">
+            <p class="ml-9 text-base">Запрос на восстановления пароля отправлен на почту:<br><b>{{ mail }}</b></p>
+        </div>
+        <a href="/auth">
+            <button class="mt-14 px-4 bg-blue-600 text-white h-10 rounded hover:bg-blue-800 transition-all duration-300">Авторизоваться</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

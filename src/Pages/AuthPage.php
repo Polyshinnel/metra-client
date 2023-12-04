@@ -49,16 +49,21 @@ class AuthPage
 
 
         $login = $params['login'];
-        $pass = md5($params['password']);
+        $pass = $params['password'];
 
         $userData = $this->userController->authUser($login, $pass);
 
         if(!empty($userData))
         {
-            setcookie("user", $userData, time() + 3600*8);
+            if($userData[0]['status'] != 0) {
+                setcookie("user", $userData, time() + 3600*8);
+
+                $response = $this->responseFactory->createResponse();
+                return $response->withHeader('Location','/')->withStatus(302);
+            }
 
             $response = $this->responseFactory->createResponse();
-            return $response->withHeader('Location','/')->withStatus(302);
+            return $response->withHeader('Location','/err-entry')->withStatus(302);
         }
 
 

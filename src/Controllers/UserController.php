@@ -18,12 +18,25 @@ class UserController
     public function authUser($login, $password) {
         $selectArr = [
             'mail' => $login,
-            'password' => $password
+            'password' => md5($password)
         ];
         $result = $this->userRepository->getUser($selectArr);
 
         if(!empty($result)) {
             return $result[0]['id'];
+        }
+
+        return NULL;
+    }
+
+    public function getUserByMail($mail) {
+        $selectArr = [
+            'mail' => $mail
+        ];
+
+        $result = $this->userRepository->getUser($selectArr);
+        if(!empty($result)) {
+            return $result[0];
         }
 
         return NULL;
