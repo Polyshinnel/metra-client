@@ -9,23 +9,25 @@
 </head>
 <body>
 <div class="form-wrapper w-full h-full absolute top-0 left-0 flex justify-center items-center">
-    <form action="" class="auth flex flex-col justify-center items-center w-72 m-auto">
+    <form action="/auth" method="post" class="auth flex flex-col justify-center items-center w-72 m-auto">
         <img src="/assets/img/logo-b.svg" alt="" class="auth-logo w-48">
         <div class="input-block flex flex-col w-72 mt-7">
             <label for="login" class="text-sm font-semibold">Почта</label>
             <input type="text" name="login" id="login" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="example@example.com" autocomplete="username">
         </div>
         <!--/.input-block-->
-        <div class="input-block flex flex-col w-72 mt-3 relative">
+        <div class="input-block flex flex-col w-72 mt-3 relative {{ err_class }}">
             <label for="password" class="text-sm font-semibold">Пароль</label>
             <input type="password" name="password" id="password" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="*****" autocomplete="current-password">
             <img src="/assets/img/eye.svg" alt="" class="absolute w-5 right-3 top-8 cursor-pointer display-pass">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Не верный логин и/или пароль!</p>
         </div>
         <!--/.input-block-->
         <div class="form-flex flex mt-6 justify-between w-full items-center">
             <input type="submit" value="Войти" class="px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300 cursor-pointer">
-            <a href="#" class="text-blue-600 font-semibold transition-all duration-300 hover:text-blue-800">Забыли пароль</a>
+            <a href="/forgotten-password" class="text-blue-600 font-semibold transition-all duration-300 hover:text-blue-800">Забыли пароль</a>
         </div>
+        <a href="/register" class="flex text-blue-600 font-semibold transition-all duration-300 hover:text-blue-800 text-center mt-3">Регистрация</a>
     </form>
 </div>
 
