@@ -4,6 +4,7 @@
 namespace App\Pages;
 
 
+use App\Controllers\UserController;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,11 +17,13 @@ class RegisterPage
 {
     private Twig $twig;
     private ResponseFactoryInterface $responseFactory;
+    private UserController $userController;
 
-    public function __construct(Twig $twig, ResponseFactoryInterface $responseFactory)
+    public function __construct(Twig $twig, ResponseFactoryInterface $responseFactory, UserController $userController)
     {
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
+        $this->userController = $userController;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -37,9 +40,17 @@ class RegisterPage
     {
         $params = $request->getParsedBody();
 
+        $name = $params['name'];
+        $organization = $params['organization'];
+        $email = $params['email'];
+        $phone = $params['phone'];
+        $country = $params['country'];
+        $password = $params['password'];
+
+        $this->userController->registerUser($name, $email, $organization, $phone, $country, $password);
 
         $response = $this->responseFactory->createResponse();
-        return $response->withHeader('Location','/auth?err=true')->withStatus(302);
+        return $response->withHeader('Location','/success-register')->withStatus(302);
     }
 
     public function success(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface

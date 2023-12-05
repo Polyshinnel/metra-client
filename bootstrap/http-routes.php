@@ -23,6 +23,7 @@ return static function (App $app): void {
     $app->get('/success-restore-request', [ForgottenPage::class, 'successRequest']);
     $app->get('/success-restore', [ForgottenPage::class, 'success']);
     $app->post('/restore-request', [ForgottenPage::class, 'request']);
+    $app->post('/restore-password', [ForgottenPage::class, 'changePassword']);
 
 
 

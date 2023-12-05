@@ -9,30 +9,34 @@
 </head>
 <body>
 <div class="form-wrapper w-full h-full absolute top-0 left-0 flex justify-center items-center">
-    <form action="" class="auth flex flex-col justify-center items-center w-72 m-auto">
+    <form action="/register" method="post" id="register-form" class="auth flex flex-col justify-center items-center w-72 m-auto">
         <img src="/assets/img/logo-b.svg" alt="" class="auth-logo w-48">
 
         <div class="input-block flex flex-col w-72 mt-7">
             <label for="name" class="text-sm font-semibold">Ваше имя</label>
             <input type="text" name="name" id="name" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="Иванов Иван">
-        </div>
-        <!--/.input-block-->
-
-        <div class="input-block flex flex-col w-72 mt-3">
-            <label for="email" class="text-sm font-semibold">Почта</label>
-            <input type="text" name="email" id="email" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="example@example.com">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите Фамилию и Имя</p>
         </div>
         <!--/.input-block-->
 
         <div class="input-block flex flex-col w-72 mt-3">
             <label for="organization" class="text-sm font-semibold">Наименование организации</label>
             <input type="text" name="organization" id="organization" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="ООО НПП “Метра”">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректное название организации</p>
+        </div>
+        <!--/.input-block-->
+
+        <div class="input-block flex flex-col w-72 mt-3">
+            <label for="email" class="text-sm font-semibold">Почта</label>
+            <input type="text" name="email" id="email" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="example@example.com">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректную почту!</p>
         </div>
         <!--/.input-block-->
 
         <div class="input-block flex flex-col w-72 mt-3">
             <label for="phone" class="text-sm font-semibold">Телефон</label>
             <input type="text" name="phone" id="phone" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="+7(999)999-99-99">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректный телефон!</p>
         </div>
         <!--/.input-block-->
 
@@ -50,25 +54,26 @@
             <label for="password" class="text-sm font-semibold">Пароль</label>
             <input type="password" name="password" id="password" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="*****" autocomplete="current-password">
             <img src="/assets/img/eye.svg" alt="" class="absolute w-5 right-3 top-8 cursor-pointer display-pass">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Пароль должен быть не менее 5 символов!</p>
         </div>
         <!--/.input-block-->
 
         <div class="input-block flex flex-col w-72 mt-3 relative">
             <label for="repeat-password" class="text-sm font-semibold">Повторите пароль</label>
-            <input type="repeat-password" name="repeat-password" id="repeat-password" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="*****" autocomplete="new-password">
+            <input type="password" name="repeat-password" id="repeat-password" class="border border-gray-400 mt-1 h-10 rounded px-3" placeholder="*****" autocomplete="new-password">
             <img src="/assets/img/eye.svg" alt="" class="absolute w-5 right-3 top-8 cursor-pointer display-pass">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Пароли должны совпадать!</p>
         </div>
         <!--/.input-block-->
 
         <div class="form-flex flex mt-6 justify-between w-full items-center">
-            <input type="submit" value="Регистрация" class="px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300 cursor-pointer">
+            <input type="submit" value="Регистрация" class="register-btn px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300 cursor-pointer">
             <a href="/auth" class="text-blue-600 font-semibold transition-all duration-300 hover:text-blue-800">Авторизация</a>
         </div>
     </form>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="/assets/js/owl-carousel/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

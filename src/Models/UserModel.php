@@ -18,8 +18,8 @@ class UserModel extends Model
         'org_addr',
         'mail',
         'phone',
-        'pass',
         'country',
+        'password',
         'status',
         'restore_token',
     ];
