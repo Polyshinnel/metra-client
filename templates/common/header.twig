@@ -1,10 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/assets/js/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/js/owl-carousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="/assets/style.css">
+    <title>ЛК Метра | {{ title }}</title>
 </head>
 <body>
+<header class="w-full h-20 metra-color flex items-center relative">
+    <div class="box-container relative">
+        <div class="header__wrapper flex justify-between items-center">
+            <div class="header-logo">
+                <a href="/">
+                    <img src="/assets/img/logo-w.svg" alt="">
+                </a>
+            </div>
+
+            <nav>
+                <ul class="flex space-x-10 text-white text-base">
+                    <li><a href="/catalog" class="hover:text-gray-300 transition-all duration-300">Каталог</a></li>
+                    <li><a href="/news" class="hover:text-gray-300 transition-all duration-300">Новости</a></li>
+                    <li><a href="/academy" class="hover:text-gray-300 transition-all duration-300">Академия Метра</a></li>
+                    <li><a href="/add-materials" class="hover:text-gray-300 transition-all duration-300">Доп. материалы</a></li>
+                    <li><a href="/tkp-construct" class="hover:text-gray-300 transition-all duration-300">Конструктор ТКП</a></li>
+                </ul>
+            </nav>
+
+            <div class="menu-btn border-white p-2 border rounded cursor-pointer">
+                <img src="/assets/img/menu.svg" alt="">
+            </div>
+        </div>
+
+        <div class="header-menu absolute top-20 right-0 bg-white border border-gray-500 rounded p-6 z-50 hidden">
+            <ul class="space-y-2 text-sm">
+                <li><a href="/notification" class="flex items-center hover:text-blue-600 transition-all duration-300">Оповещения <div class="notification-round"><p>0</p></div></a></li>
+                <li><a href="/deals" class="hover:text-blue-600 transition-all duration-300">Мои сделки</a></li>
+                <li><a href="/clients" class="hover:text-blue-600 transition-all duration-300">Мои клиенты</a></li>
+                <li><a href="/profile" class="hover:text-blue-600 transition-all duration-300">Профиль</a></li>
+            </ul>
+
+            <div class="header-menu__user mt-4">
+                <img src="/assets/img/user.svg" alt="">
+                <div class="header-menu__user-text">
+                    <h2 class="text-xs">{{ user_name }}</h2>
+                    <p class="exit-btn text-xs text-blue-600 cursor-pointer hover:text-blue-800 transition-all duration-300">
+                        <a href="/exit">Выйти</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

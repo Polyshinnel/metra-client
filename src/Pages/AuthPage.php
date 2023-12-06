@@ -30,12 +30,19 @@ class AuthPage
     {
         $params = $request->getQueryParams();
         $errClass = '';
+
         if(isset($params['err'])) {
             $errClass = 'error-input';
         }
+
+        if(isset($_COOKIE["user"])) {
+            return $response->withHeader('Location', '/')->withStatus(302);
+        }
+
         $data = $this->twig->fetch('service-page/auth.twig', [
             'err_class' => $errClass
         ]);
+
         return new Response(
             200,
             new Headers(['Content-Type' => 'text/html']),
@@ -53,10 +60,12 @@ class AuthPage
 
         $userData = $this->userController->authUser($login, $pass);
 
+
+
         if(!empty($userData))
         {
-            if($userData[0]['status'] != 0) {
-                setcookie("user", $userData, time() + 3600*8);
+            if($userData['status'] != 0) {
+                setcookie("user", $userData['id'], time() + 3600*8);
 
                 $response = $this->responseFactory->createResponse();
                 return $response->withHeader('Location','/')->withStatus(302);
@@ -65,6 +74,7 @@ class AuthPage
             $response = $this->responseFactory->createResponse();
             return $response->withHeader('Location','/err-entry')->withStatus(302);
         }
+
 
 
         $response = $this->responseFactory->createResponse();

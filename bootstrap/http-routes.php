@@ -25,7 +25,7 @@ return static function (App $app): void {
     $app->post('/restore-request', [ForgottenPage::class, 'request']);
     $app->post('/restore-password', [ForgottenPage::class, 'changePassword']);
 
-
+    $app->get('/exit',[IndexPage::class,'exit']);
 
     $app->group('/',function (RouteCollectorProxy $group) {
         $group->get('',[IndexPage::class,'get']);

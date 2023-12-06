@@ -27,7 +27,7 @@ class UserController
         $result = $this->userRepository->getUser($selectArr);
 
         if(!empty($result)) {
-            return $result[0]['id'];
+            return $result[0];
         }
 
         return NULL;
@@ -89,5 +89,14 @@ class UserController
             'restore_token' => ''
         ];
         $this->userRepository->updateUser($updateArr, $id);
+    }
+
+    public function getUserById($id) {
+        $result = $this->userRepository->getUser(['id' => $id]);
+        if(!empty($result)) {
+            return $result[0];
+        }
+
+        return NULL;
     }
 }
