@@ -1,10 +1,16 @@
 <?php
 
 use App\Middleware\BasicAuthMiddleware;
+use App\Pages\AcademyPage;
+use App\Pages\AddMaterialsPage;
 use App\Pages\AuthPage;
+use App\Pages\CatalogPage;
 use App\Pages\ForgottenPage;
 use App\Pages\IndexPage;
+use App\Pages\NewsPage;
+use App\Pages\ProfilePage;
 use App\Pages\RegisterPage;
+use App\Pages\TkpPage;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -29,5 +35,23 @@ return static function (App $app): void {
 
     $app->group('/',function (RouteCollectorProxy $group) {
         $group->get('',[IndexPage::class,'get']);
+        $group->get('news',[NewsPage::class,'get']);
+        $group->get('catalog',[CatalogPage::class,'get']);
+        $group->get('profile',[ProfilePage::class,'get']);
+        $group->get('notification',[ProfilePage::class,'notification']);
+        $group->get('clients',[ProfilePage::class,'clients']);
+
+    })->add(BasicAuthMiddleware::class);;
+
+    $app->group('/academy',function (RouteCollectorProxy $group) {
+        $group->get('',[AcademyPage::class,'get']);
+    })->add(BasicAuthMiddleware::class);;
+
+    $app->group('/add-materials',function (RouteCollectorProxy $group) {
+        $group->get('',[AddMaterialsPage::class,'get']);
+    })->add(BasicAuthMiddleware::class);;
+
+    $app->group('/tkp-construct',function (RouteCollectorProxy $group) {
+        $group->get('',[TkpPage::class,'get']);
     })->add(BasicAuthMiddleware::class);;
 };
