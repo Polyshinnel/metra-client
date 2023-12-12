@@ -1,5 +1,68 @@
 {% extends 'base.twig' %}
 
 {% block body %}
+<main class="pb-14">
+    <div class="box-container">
+        <div class="page-title mt-7">
+            <h1 class="text-2xl font-semibold">Профиль</h1>
+            <ul class="breadcrumb text-sm flex items-center mt-2">
+                <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                <li>Профиль</li>
+            </ul>
 
+            <div class="page-block">
+                <a href="/profile/change-password">
+                    <button class="mt-8 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Сменить пароль</button>
+                </a>
+
+                <form class="profile-block mt-8" action="/profile" method="POST" id="profile-form">
+                    <h2 class="text-xl font-semibold flex mb-4">Данные профиля</h2>
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="user-name" class="text-sm font-semibold">Ваше имя</label>
+                        <input type="text" name="user-name" id="user-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="Иванов Иван Иванович" value="{{ user_name }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректное имя</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="user-email" class="text-sm font-semibold">Email</label>
+                        <input type="text" name="user-email" id="user-email" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="example@example.com" value="{{ email }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректную почту</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="organization-name" class="text-sm font-semibold">ИНН</label>
+                        <input type="text" name="inn" id="inn" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="4025012510" value="{{ inn }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректный инн</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="organization-name" class="text-sm font-semibold">Наименование организации</label>
+                        <input type="text" name="organization-name" id="organization-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="ООО НПП Метра" value="{{ org_name }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректное наименование организации</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="organization-addres" class="text-sm font-semibold">Адрес организации</label>
+                        <input type="text" name="organization-addres" id="organization-addres" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Красных зорь, д. 13" value="{{ org_addr }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректный адрес</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="user-phone" class="text-sm font-semibold">Телефон</label>
+                        <input type="text" name="user-phone" id="user-phone" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="+7(999)999-99-99" value="{{ phone }}">
+                        <p class="hint text-xs mt-1 text-red-500 hidden">Введите корректный телефон</p>
+                    </div>
+                    <!--/.input-block-->
+
+                    <input type="submit" id="update-profile" class="mt-8 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300" value="Сохранить">
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
 {% endblock %}

@@ -38,8 +38,12 @@ return static function (App $app): void {
         $group->get('news',[NewsPage::class,'get']);
         $group->get('catalog',[CatalogPage::class,'get']);
         $group->get('profile',[ProfilePage::class,'get']);
+        $group->get('profile/change-password',[ProfilePage::class,'changePassword']);
         $group->get('notification',[ProfilePage::class,'notification']);
         $group->get('clients',[ProfilePage::class,'clients']);
+
+        $group->post('profile', [ProfilePage::class,'updateProfile']);
+        $group->post('profile/change-password', [ProfilePage::class,'updatePassword']);
 
     })->add(BasicAuthMiddleware::class);;
 
