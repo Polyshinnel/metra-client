@@ -21,6 +21,7 @@ class UserModel extends Model
         'country',
         'password',
         'status',
+        'admin_status',
         'restore_token',
     ];
 }

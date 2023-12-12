@@ -21,6 +21,7 @@ final class UserMigration extends Migration
                 $table->string('country', '4');
                 $table->string('password', '256');
                 $table->integer('status');
+                $table->integer('admin_status');
                 $table->string('restore_token', '64');
             });
         }

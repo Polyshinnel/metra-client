@@ -58,6 +58,7 @@ class UserController
             'country' => $country,
             'password' => md5($password),
             'status' => 0,
+            'admin_status' => 0,
             'restore_token' => ''
         ];
 
