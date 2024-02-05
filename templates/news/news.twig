@@ -1,5 +1,50 @@
 {% extends 'base.twig' %}
 
 {% block body %}
+    <main class="pb-14">
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">Новости</h1>
+                <ul class="breadcrumb text-sm flex items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;
+                    </li>
+                    <li>Новости</li>
+                </ul>
+            </div>
 
+            <div class="list-block" id="list-block">
+                <ul class="list flex flex-wrap -ml-5 mt-6">
+                    {% if news %}
+                        {% for newsItem in news %}
+                            <a href="/news/{{ newsItem.id }}" class="flex ml-5 mt-5">
+                                <div class="section-item w-64 section-item-height border border-gray-300 rounded">
+                                    <div class="section-item__img w-full h-44 rounded overflow-hidden">
+                                        <img src="{{ newsItem.news_img }}" alt="" class="object-cover w-full h-full">
+                                    </div>
+                                    <div class="section-item__text p-4">
+                                        <p class="text-sm">{{ newsItem.date_create }}</p>
+                                        <h3 class="mt-2 text-sm font-semibold">{{ newsItem.news_title }}</h3>
+                                        <p class="mt-2 text-sm">{{ newsItem.news_short }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+                <div class="pagination-block mt-10 flex justify-center">
+                    <ul class="pagination pagination_mod flex flex-wrap items-center -ml-2"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="/assets/js/list.min.js"></script>
+    <script>
+        var monkeyList = new List('list-block', {
+            valueNames: ['name'],
+            page: 12,
+            pagination: true
+        });
+    </script>
 {% endblock %}

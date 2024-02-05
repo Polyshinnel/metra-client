@@ -4,75 +4,28 @@
 
 <main class="pb-14">
     <div class="box-container">
+        {% if banners %}
         <div class="banner-block mt-5 owl-carousel">
-            <div class="banner-item">
-                <img src="/assets/img/baner.png" alt="">
-                <div class="banner-item__text-wrapper">
-                    <div class="banner-item__text-block">
-                        <div class="banner-item__text text-white">
-                            <h2 class="text-2xl">Внимание дилеров!</h2>
-                            <p class="text-sm mt-2">Обновление модельного ряда Весов Кочевник</p>
+            {% for banner in banners %}
+                <div class="banner-item">
+                    <img src="{{ banner.image }}" alt="">
+                    <div class="banner-item__text-wrapper">
+                        <div class="banner-item__text-block">
+                            <div class="banner-item__text text-white">
+                                <h2 class="text-2xl">{{ banner.title }}</h2>
+                                <p class="text-sm mt-2">{{ banner.text }}</p>
+                            </div>
+
+                            <a href="{{ banner.link }}" class="info-banner-btn">
+                                <button>{{ banner.text_btn }}</button>
+                            </a>
                         </div>
-
-                        <a href="#" class="info-banner-btn">
-                            <button>Ознакомиться</button>
-                        </a>
                     </div>
+
                 </div>
-
-            </div>
-
-            <div class="banner-item">
-                <img src="/assets/img/baner.png" alt="">
-                <div class="banner-item__text-wrapper">
-                    <div class="banner-item__text-block">
-                        <div class="banner-item__text text-white">
-                            <h2 class="text-2xl">Внимание дилеров!</h2>
-                            <p class="text-sm mt-2">Обновление модельного ряда Весов Кочевник</p>
-                        </div>
-
-                        <a href="#" class="info-banner-btn">
-                            <button>Ознакомиться</button>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="banner-item">
-                <img src="/assets/img/baner.png" alt="">
-                <div class="banner-item__text-wrapper">
-                    <div class="banner-item__text-block">
-                        <div class="banner-item__text text-white">
-                            <h2 class="text-2xl">Внимание дилеров!</h2>
-                            <p class="text-sm mt-2">Обновление модельного ряда Весов Кочевник</p>
-                        </div>
-
-                        <a href="#" class="info-banner-btn">
-                            <button>Ознакомиться</button>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="banner-item">
-                <img src="/assets/img/baner.png" alt="">
-                <div class="banner-item__text-wrapper">
-                    <div class="banner-item__text-block">
-                        <div class="banner-item__text text-white">
-                            <h2 class="text-2xl">Внимание дилеров!</h2>
-                            <p class="text-sm mt-2">Обновление модельного ряда Весов Кочевник</p>
-                        </div>
-
-                        <a href="#" class="info-banner-btn">
-                            <button>Ознакомиться</button>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+            {% endfor %}
         </div>
+        {% endif %}
 
         <div class="dealer-policy mt-6">
             <h2 class="text-lg font-semibold">Дилерская политика</h2>
@@ -89,113 +42,46 @@
                 <a href="/news" class="flex mt-1 text-blue-600 text-sm hover:text-blue-800 transition-all duration-300">Смотреть все новости</a>
             </div>
             <div class="section-wrapper mt-5 flex items-center space-x-12">
-                <a href="#">
-                    <div class="section-item w-64 section-item-height border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/news-1.jpg" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Тестовая новость</h3>
-                            <p class="mt-2 text-sm">Краткое описание новости, в котором раскрывается основная суть</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 section-item-height border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/news-2.jpg" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Тестовая новость</h3>
-                            <p class="mt-2 text-sm">Краткое описание новости, в котором раскрывается основная суть</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 section-item-height border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/news-1.jpg" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Тестовая новость</h3>
-                            <p class="mt-2 text-sm">Краткое описание новости, в котором раскрывается основная суть</p>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 section-item-height border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/news-2.jpg" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Тестовая новость</h3>
-                            <p class="mt-2 text-sm">Краткое описание новости, в котором раскрывается основная суть</p>
-                        </div>
-                    </div>
-                </a>
+                {% if news %}
+                    {% for newsItem in news %}
+                        <a href="/news/{{ newsItem.id }}">
+                            <div class="section-item w-64 section-item-height border border-gray-300 rounded">
+                                <div class="section-item__img w-full h-44 rounded overflow-hidden">
+                                    <img src="{{ newsItem.news_img }}" alt="" class="object-cover w-full h-full">
+                                </div>
+                                <div class="section-item__text p-4">
+                                    <p class="text-sm">{{ newsItem.date_create }}</p>
+                                    <h3 class="mt-2 text-sm font-semibold">{{ newsItem.news_title }}</h3>
+                                    <p class="mt-2 text-sm">{{ newsItem.news_short }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
             </div>
         </section>
 
         <section class="vebinar-block mt-8">
             <div class="section-title">
-                <h2 class="text-lg font-semibold">Последние новости</h2>
-                <a href="/academy/vebinars" class="flex mt-1 text-blue-600 text-sm hover:text-blue-800 transition-all duration-300">Смотреть все новости</a>
+                <h2 class="text-lg font-semibold">Вебинары</h2>
+                <a href="/academy/vebinars" class="flex mt-1 text-blue-600 text-sm hover:text-blue-800 transition-all duration-300">Смотреть все вебинары</a>
             </div>
             <div class="section-wrapper mt-5 flex items-center space-x-12">
-                <a href="#">
-                    <div class="section-item w-64 h-72 border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Вебинар 1</h3>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 h-72 border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Вебинар 1</h3>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 h-72 border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Вебинар 1</h3>
-                        </div>
-                    </div>
-                </a>
-
-                <a href="#">
-                    <div class="section-item w-64 h-72 border border-gray-300 rounded">
-                        <div class="section-item__img w-full h-44 rounded overflow-hidden">
-                            <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
-                        </div>
-                        <div class="section-item__text p-4">
-                            <p class="text-sm">05.05.2023</p>
-                            <h3 class="mt-2 text-sm font-semibold">Вебинар 1</h3>
-                        </div>
-                    </div>
-                </a>
+                {% if vebinars %}
+                    {% for vebinar in vebinars %}
+                        <a href="/academy/vebinars/{{ vebinar.id }}">
+                            <div class="section-item w-64 h-80 border border-gray-300 rounded">
+                                <div class="section-item__img w-full h-44 rounded overflow-hidden">
+                                    <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
+                                </div>
+                                <div class="section-item__text p-4">
+                                    <p class="text-sm">{{ vebinar.date_create }}</p>
+                                    <h3 class="mt-2 text-sm font-semibold">{{ vebinar.title }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
             </div>
         </section>
     </div>

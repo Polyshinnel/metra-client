@@ -23,4 +23,20 @@ class CommonUtil
             mt_rand(0, 65535)
         );
     }
+
+    public function convertDate(string $date, string $inputType, string $outputType): string {
+        if($inputType == 'en') {
+            if($outputType = 'ru'){
+                $dateArr = explode('-', $date);
+                return sprintf('%s.%s.%s', $dateArr['2'], $dateArr['1'], $dateArr['0']);
+            }
+        }
+
+        if($inputType == 'ru') {
+            if($outputType = 'en'){
+                $dateArr = explode('.', $date);
+                return sprintf('%s-%s-%s', $dateArr['2'], $dateArr['1'], $dateArr['0']);
+            }
+        }
+    }
 }

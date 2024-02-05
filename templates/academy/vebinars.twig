@@ -1,0 +1,54 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+    <main>
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">Вебинары</h1>
+                <ul class="breadcrumb text-sm flex items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                    <li><a href="/academy" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Академия метра</a>&nbsp;/&nbsp;</li>
+                    <li>Вебинары</li>
+                </ul>
+            </div>
+
+            <div id="list-block" class="list-block">
+                <div class="search-block relative w-72 mt-4">
+                    <input type="text" name="product-search" class="search border border-gray-400 rounded-md px-4 h-10 w-72 text-sm" placeholder="Поиск">
+                    <img src="/assets/img/search.svg" alt="" class="absolute top-2 right-2">
+                </div>
+
+                <ul class="list flex flex-wrap -ml-5 mt-6">
+                    {% if vebinars %}
+                        {% for vebinar in vebinars %}
+                            <a href="/academy/vebinars/{{ vebinar.id }}" class="flex mt-5 m-5">
+                                <div class="section-item w-64 h-80 border border-gray-300 rounded">
+                                    <div class="section-item__img w-full h-44 rounded overflow-hidden">
+                                        <img src="/assets/img/vebinar-prev.png" alt="" class="object-cover w-full h-full">
+                                    </div>
+                                    <div class="section-item__text p-4">
+                                        <p class="text-sm">{{ vebinar.date_create }}</p>
+                                        <h3 class="mt-2 text-sm font-semibold name">{{ vebinar.title }}</h3>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+
+                <div class="pagination-block mt-10 flex justify-center">
+                    <ul class="pagination pagination_mod flex flex-wrap items-center -ml-2"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/list.min.js"></script>
+    <script>
+        var monkeyList = new List('list-block', {
+            valueNames: ['name'],
+            page: 12,
+            pagination: true
+        });
+    </script>
+{% endblock %}

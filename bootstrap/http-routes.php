@@ -36,6 +36,8 @@ return static function (App $app): void {
     $app->group('/',function (RouteCollectorProxy $group) {
         $group->get('',[IndexPage::class,'get']);
         $group->get('news',[NewsPage::class,'get']);
+        $group->get('news/{id}',[NewsPage::class,'getNews']);
+
         $group->get('catalog',[CatalogPage::class,'get']);
         $group->get('profile',[ProfilePage::class,'get']);
         $group->get('profile/change-password',[ProfilePage::class,'changePassword']);
@@ -49,6 +51,8 @@ return static function (App $app): void {
 
     $app->group('/academy',function (RouteCollectorProxy $group) {
         $group->get('',[AcademyPage::class,'get']);
+        $group->get('/vebinars', [AcademyPage::class,'vebinars']);
+        $group->get('/vebinars/{id}', [AcademyPage::class,'vebinarPage']);
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/add-materials',function (RouteCollectorProxy $group) {
