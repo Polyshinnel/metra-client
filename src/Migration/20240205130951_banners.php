@@ -25,6 +25,6 @@ final class Banners extends Migration
 
     public function down()
     {
-        $this->schema->drop('user_notifications');
+        $this->schema->drop('banners');
     }
 }

@@ -1,5 +1,30 @@
 {% extends 'base.twig' %}
 
 {% block body %}
+    <main>
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">Доп.материалы</h1>
+                <ul class="breadcrumb text-sm flex items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                    <li>Доп.материалы</li>
+                </ul>
+            </div>
 
+            <div class="add-materials-block flex flex-wrap -ml-9">
+                {% if categories %}
+                    {% for category in categories %}
+                        <a href="/add-materials/{{ category.path }}" class="flex mt-8 ml-9">
+                            <div class="add-materials-block__item w-40">
+                                <div class="add-materials-block__img w-40 h-44 border border-gray-400 rounded flex items-center justify-center">
+                                    <img src="{{ category.img }}" alt="">
+                                </div>
+                                <p class="mt-2 text-center text-xs">{{ category.name }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </main>
 {% endblock %}

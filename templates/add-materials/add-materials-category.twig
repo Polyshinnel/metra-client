@@ -1,0 +1,54 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+    <main>
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">{{ category_data.category_data.name }}</h1>
+                <ul class="breadcrumb text-sm flex items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                    <li><a href="/add-materials" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Доп.материалы</a>&nbsp;/&nbsp;</li>
+                    <li>{{ category_data.category_data.name }}</li>
+                </ul>
+
+                <div class="list-block" id="list-block">
+                    <div class="search-block relative w-72 mt-4">
+                        <input type="text" name="product-search" class="search border border-gray-400 rounded-md px-4 h-10 w-72 text-sm" placeholder="Поиск">
+                        <img src="../dist/assets/img/search.svg" alt="" class="absolute top-2 right-2">
+                    </div>
+
+                    <ul class="list list-items flex flex-wrap -ml-9">
+                        {% if category_data.content %}
+                            {% for content in category_data.content %}
+                                <li class="mt-8 ml-9">
+                                    <a href="{{ content.path }}">
+                                        <div class="list-items__item w-40">
+                                            <div class="list-items__item-img w-40 h-44 border border-gray-300 rounded flex items-center justify-center">
+                                                <img src="{{ content.icon }}" alt="">
+                                            </div>
+                                            <p class="name text-xs mt-1">{{ content.name }}</p>
+                                            <p class="type text-xs text-blue-600">Скачать</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+
+                    <div class="pagination-block mt-10 flex justify-center">
+                        <ul class="pagination pagination_mod flex flex-wrap items-center -ml-2"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/assets/js/list.min.js"></script>
+    <script>
+        var monkeyList = new List('list-block', {
+            valueNames: ['name'],
+            page: 18,
+            pagination: true
+        });
+    </script>
+{% endblock %}

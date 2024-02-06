@@ -4,6 +4,7 @@
 namespace App\Pages;
 
 
+use App\Controllers\AcademyController;
 use App\Controllers\UserController;
 use App\Controllers\VebinarController;
 use App\Repository\VebinarRepository;
@@ -21,28 +22,72 @@ class AcademyPage
     private ResponseFactoryInterface $responseFactory;
     private UserController $userController;
     private VebinarController $vebinarController;
+    private AcademyController $academyController;
 
     public function __construct(
         Twig $twig,
         ResponseFactoryInterface $responseFactory,
         UserController $userController,
-        VebinarController $vebinarController
+        VebinarController $vebinarController,
+        AcademyController $academyController
     )
     {
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->userController = $userController;
         $this->vebinarController = $vebinarController;
+        $this->academyController = $academyController;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $userId = $_COOKIE['user'];
         $userData = $this->userController->getUserById($userId);
+        $academyCategories = $this->academyController->getAcademyCategories(['parent_id' => 0]);
 
         $data = $this->twig->fetch('academy/academy.twig', [
             'title' => 'Академия метра',
-            'user_name' => $userData['name']
+            'user_name' => $userData['name'],
+            'academy_categories' => $academyCategories
+        ]);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function categories(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+        $path = $args['path'];
+        $categoryContent = $this->academyController->getAcademyCategoryContent($path);
+
+        $data = $this->twig->fetch('academy/academy-category.twig', [
+            'title' => 'Академия метра',
+            'user_name' => $userData['name'],
+            'category_content' => $categoryContent
+        ]);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function getContentPage(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+        $content = $this->academyController->getAcademyPage($args);
+
+        $data = $this->twig->fetch('academy/academy-content-page.twig', [
+            'title' => 'Академия метра',
+            'user_name' => $userData['name'],
+            'content_data' => $content
         ]);
 
         return new Response(

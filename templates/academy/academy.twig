@@ -12,16 +12,7 @@
         </div>
 
         <div class="add-materials-block flex flex-wrap -ml-9">
-            <a href="#" class="flex mt-8 ml-9">
-                <div class="add-materials-block__item w-40">
-                    <div class="add-materials-block__img w-40 h-44 border border-gray-400 rounded flex items-center justify-center">
-                        <img src="/assets/img/academy/presentations.svg" alt="">
-                    </div>
-                    <p class="mt-2 text-center text-xs">Презентации</p>
-                </div>
-            </a>
-
-            <a href="/academy/vebinars" class="flex mt-8 ml-9">
+            <a href="/vebinars" class="flex mt-8 ml-9">
                 <div class="add-materials-block__item w-40">
                     <div class="add-materials-block__img w-40 h-44 border border-gray-400 rounded flex items-center justify-center">
                         <img src="/assets/img/academy/vebinars.svg" alt="">
@@ -30,14 +21,18 @@
                 </div>
             </a>
 
-            <a href="#" class="flex mt-8 ml-9">
-                <div class="add-materials-block__item w-40">
-                    <div class="add-materials-block__img w-40 h-44 border border-gray-400 rounded flex items-center justify-center">
-                        <img src="/assets/img/academy/video-instructuions.svg" alt="">
-                    </div>
-                    <p class="mt-2 text-center text-xs">Видео инструкции</p>
-                </div>
-            </a>
+            {% if academy_categories %}
+                {% for category in academy_categories %}
+                    <a href="/academy/{{ category.path }}" class="flex mt-8 ml-9">
+                        <div class="add-materials-block__item w-40">
+                            <div class="add-materials-block__img w-40 h-44 border border-gray-400 rounded flex items-center justify-center">
+                                <img src="{{ category.img }}" alt="">
+                            </div>
+                            <p class="mt-2 text-center text-xs">{{ category.name }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </main>

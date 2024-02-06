@@ -47,16 +47,20 @@ return static function (App $app): void {
         $group->post('profile', [ProfilePage::class,'updateProfile']);
         $group->post('profile/change-password', [ProfilePage::class,'updatePassword']);
 
+        $group->get('vebinars', [AcademyPage::class,'vebinars']);
+        $group->get('vebinars/{id}', [AcademyPage::class,'vebinarPage']);
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/academy',function (RouteCollectorProxy $group) {
         $group->get('',[AcademyPage::class,'get']);
-        $group->get('/vebinars', [AcademyPage::class,'vebinars']);
-        $group->get('/vebinars/{id}', [AcademyPage::class,'vebinarPage']);
+        $group->get('/{path}', [AcademyPage::class,'categories']);
+        $group->get('/{path}/{page}', [AcademyPage::class,'getContentPage']);
+
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/add-materials',function (RouteCollectorProxy $group) {
         $group->get('',[AddMaterialsPage::class,'get']);
+        $group->get('/{path}',[AddMaterialsPage::class,'getCategory']);
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/tkp-construct',function (RouteCollectorProxy $group) {
