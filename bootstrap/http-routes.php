@@ -48,14 +48,15 @@ return static function (App $app): void {
 
         $group->get('vebinars', [AcademyPage::class,'vebinars']);
         $group->get('vebinars/{id}', [AcademyPage::class,'vebinarPage']);
+
+        $group->get('/search',[CatalogPage::class,'search']);
+        $group->post('/search',[CatalogPage::class,'post_search']);
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/catalog', function (RouteCollectorProxy $group) {
         $group->get('',[CatalogPage::class,'get']);
         $group->get('/{id}',[CatalogPage::class,'getCatalog']);
         $group->get('/product/{id}',[CatalogPage::class,'getProduct']);
-        $group->get('/search',[CatalogPage::class,'search']);
-        $group->post('/search',[CatalogPage::class,'post_search']);
     });
 
     $app->group('/academy',function (RouteCollectorProxy $group) {

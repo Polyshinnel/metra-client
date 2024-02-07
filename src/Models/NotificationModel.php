@@ -9,10 +9,12 @@ class NotificationModel extends Model
     protected $table = 'notifications';
     protected $fillable = [
         'id',
+        'notification_title',
         'notification_text',
         'notification_type',
         'publish_status',
-        'data_create'
+        'date_create',
+        'date_publish'
     ];
     public $timestamps = false;
 }

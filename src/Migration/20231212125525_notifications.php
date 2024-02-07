@@ -12,10 +12,12 @@ final class Notifications extends Migration
         if(!$exists) {
             $this->schema->create('notifications', function (Blueprint $table){
                 $table->increments('id');
+                $table->text('notification_title');
                 $table->text('notification_text');
                 $table->integer('notification_type');
                 $table->integer('publish_status');
-                $table->dateTime('data_create');
+                $table->dateTime('date_create');
+                $table->dateTime('date_publish');
             });
         }
     }
