@@ -102,4 +102,42 @@ class CatalogPage
             (new StreamFactory())->createStream($data)
         );
     }
+
+    public function search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+
+
+        $data = $this->twig->fetch('catalog/product.twig', [
+            'title' => 'Каталог',
+            'user_name' => $userData['name'],
+        ]);
+
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function post_search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+
+
+        $data = $this->twig->fetch('catalog/product.twig', [
+            'title' => 'Каталог',
+            'user_name' => $userData['name'],
+        ]);
+
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
 }

@@ -38,10 +38,6 @@ return static function (App $app): void {
         $group->get('news',[NewsPage::class,'get']);
         $group->get('news/{id}',[NewsPage::class,'getNews']);
 
-        $group->get('catalog',[CatalogPage::class,'get']);
-        $group->get('catalog/{id}',[CatalogPage::class,'getCatalog']);
-        $group->get('product/{id}',[CatalogPage::class,'getProduct']);
-
         $group->get('profile',[ProfilePage::class,'get']);
         $group->get('profile/change-password',[ProfilePage::class,'changePassword']);
         $group->get('notification',[ProfilePage::class,'notification']);
@@ -53,6 +49,14 @@ return static function (App $app): void {
         $group->get('vebinars', [AcademyPage::class,'vebinars']);
         $group->get('vebinars/{id}', [AcademyPage::class,'vebinarPage']);
     })->add(BasicAuthMiddleware::class);;
+
+    $app->group('/catalog', function (RouteCollectorProxy $group) {
+        $group->get('',[CatalogPage::class,'get']);
+        $group->get('/{id}',[CatalogPage::class,'getCatalog']);
+        $group->get('/product/{id}',[CatalogPage::class,'getProduct']);
+        $group->get('/search',[CatalogPage::class,'search']);
+        $group->post('/search',[CatalogPage::class,'post_search']);
+    });
 
     $app->group('/academy',function (RouteCollectorProxy $group) {
         $group->get('',[AcademyPage::class,'get']);
