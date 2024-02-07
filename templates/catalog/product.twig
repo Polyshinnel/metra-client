@@ -1,5 +1,75 @@
 {% extends 'base.twig' %}
 
 {% block body %}
+    <main>
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">{{ product.name }}</h1>
+                <ul class="breadcrumb text-sm flex flex-wrap items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                    <li><a href="/catalog" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Каталог</a>&nbsp;/&nbsp;</li>
+                    {% if parent_category %}
+                        {% for category in parent_category %}
+                            <li><a href="/catalog/{{ category.id }}" class="text-blue-600 hover:text-blue-800 transition-all duration-300">{{ category.name }}</a>&nbsp;/&nbsp;</li>
+                        {% endfor %}
+                    {% endif %}
+                    <li>{{ product.name }}</li>
+                </ul>
 
+                <div class="page-product-block flex items-start justify-between mt-8">
+                    <div class="page-product-block__img">
+                        <img src="{{ product.img }}" alt="">
+                    </div>
+
+                    <div class="page-product-block__chars">
+                        <div class="page-product-block__char-block">
+                            <div class="page-product-block__char-block-title px-3 h-8 bg-gray-200 flex items-center">
+                                <h2 class="text-base">Основные параметры:</h2>
+                            </div>
+                            <div class="page-product-block__char-block__list px-3 py-3 text-sm">
+                                <div class="page-product-block__char-block-item flex ">
+                                    <span class="text-gray-500">Наименование:</span>
+                                    <p class="ml-2 font-semibold">{{ product.name }}</p>
+                                </div>
+                                <!--/page-product-block__char-block-item-->
+
+                                <div class="page-product-block__char-block-item flex mt-2">
+                                    <span class="text-gray-500">Артикул:</span>
+                                    <p class="ml-2 font-semibold">{{ product.sku }}</p>
+                                </div>
+                                <!--/page-product-block__char-block-item-->
+
+                                <div class="page-product-block__char-block-item flex mt-2">
+                                    <span class="text-gray-500">Цена:</span>
+                                    <p class="ml-2 font-semibold">{{ product.price }} руб</p>
+                                </div>
+                                <!--/page-product-block__char-block-item-->
+
+                                <div class="page-product-block__char-block-item flex mt-2">
+                                    <span class="text-gray-500">Наличие:</span>
+                                    {% if product.status %}
+                                        <p class="ml-2 font-semibold text-green-500">В наличиии</p>
+                                    {% else %}
+                                        <p class="ml-2 font-semibold text-blue-600">Под заказ</p>
+                                    {% endif %}
+                                </div>
+                                <!--/page-product-block__char-block-item-->
+                            </div>
+                        </div>
+                        <!--/page-product-block__char-block-->
+
+                        <div class="page-product-block__char-block mt-4">
+                            <div class="page-product-block__char-block-title px-3 h-8 bg-gray-200 flex items-center">
+                                <h2 class="text-base">Текстовое описание:</h2>
+                            </div>
+                            <div class="page-product-block__char-block-item-descr px-3 py-3 text-sm">
+                                <p>{{ product.description }}</p>
+                            </div>
+                        </div>
+                        <!--/page-product-block__char-block-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock %}

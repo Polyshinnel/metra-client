@@ -1,11 +1,11 @@
 <?php
 
-use App\Jobs\TestJob;
+use App\Jobs\ProductParser;
 
 return [
     'console' => [
         'commands' => [
-            'Название комманды' => TestJob::class
+            'Product parser' => ProductParser::class
         ]
     ]
 ];

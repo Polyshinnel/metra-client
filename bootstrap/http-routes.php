@@ -39,6 +39,9 @@ return static function (App $app): void {
         $group->get('news/{id}',[NewsPage::class,'getNews']);
 
         $group->get('catalog',[CatalogPage::class,'get']);
+        $group->get('catalog/{id}',[CatalogPage::class,'getCatalog']);
+        $group->get('product/{id}',[CatalogPage::class,'getProduct']);
+
         $group->get('profile',[ProfilePage::class,'get']);
         $group->get('profile/change-password',[ProfilePage::class,'changePassword']);
         $group->get('notification',[ProfilePage::class,'notification']);

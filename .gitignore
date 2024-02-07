@@ -5,3 +5,4 @@ tmp/
 composer.lock
 logs/
 uploads/
+exchange/
