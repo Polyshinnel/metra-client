@@ -49,8 +49,8 @@ return static function (App $app): void {
         $group->get('vebinars', [AcademyPage::class,'vebinars']);
         $group->get('vebinars/{id}', [AcademyPage::class,'vebinarPage']);
 
-        $group->get('/search',[CatalogPage::class,'search']);
-        $group->post('/search',[CatalogPage::class,'post_search']);
+        $group->get('search',[CatalogPage::class,'search']);
+        $group->post('search',[CatalogPage::class,'post_search']);
     })->add(BasicAuthMiddleware::class);;
 
     $app->group('/catalog', function (RouteCollectorProxy $group) {

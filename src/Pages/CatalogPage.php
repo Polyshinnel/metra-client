@@ -5,6 +5,7 @@ namespace App\Pages;
 
 
 use App\Controllers\ProductController;
+use App\Controllers\SearchController;
 use App\Controllers\UserController;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -20,13 +21,21 @@ class CatalogPage
     private ResponseFactoryInterface $responseFactory;
     private UserController $userController;
     private ProductController $productController;
+    private SearchController $searchController;
 
-    public function __construct(Twig $twig, ResponseFactoryInterface $responseFactory, UserController $userController, ProductController $productController)
+    public function __construct(
+        Twig $twig,
+        ResponseFactoryInterface $responseFactory,
+        UserController $userController,
+        ProductController $productController,
+        SearchController $searchController
+    )
     {
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->userController = $userController;
         $this->productController = $productController;
+        $this->searchController = $searchController;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -84,7 +93,7 @@ class CatalogPage
     {
         $userId = $_COOKIE['user'];
         $userData = $this->userController->getUserById($userId);
-        $productArr = $this->productController->getProducts(['id' => $args['id']]);
+        $productArr = $this->productController->getProducts(['id' => $args['id']], $userData['country']);
         $categoryId = $productArr[0]['category_id'];
         $parentArr = $this->productController->getAllCatalogParents($categoryId);
 
@@ -107,11 +116,21 @@ class CatalogPage
     {
         $userId = $_COOKIE['user'];
         $userData = $this->userController->getUserById($userId);
+        $params = $request->getQueryParams();
+        $query = '';
+        $products = [];
+        if(!empty($params['query'])) {
+            $query = $params['query'];
+            $products = $this->searchController->searchProducts($query);
+        }
 
 
-        $data = $this->twig->fetch('catalog/product.twig', [
-            'title' => 'Каталог',
+
+        $data = $this->twig->fetch('catalog/search.twig', [
+            'title' => 'Поиск',
             'user_name' => $userData['name'],
+            'query' => $query,
+            'products' => $products
         ]);
 
 
@@ -124,19 +143,15 @@ class CatalogPage
 
     public function post_search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $userId = $_COOKIE['user'];
-        $userData = $this->userController->getUserById($userId);
-
-
-        $data = $this->twig->fetch('catalog/product.twig', [
-            'title' => 'Каталог',
-            'user_name' => $userData['name'],
-        ]);
-
+        $params = $request->getParsedBody();
+        $data = '';
+        if(isset($params['query'])) {
+            $data = $this->searchController->getJsonSearch($params['query']);
+        }
 
         return new Response(
             200,
-            new Headers(['Content-Type' => 'text/html']),
+            new Headers(['Content-Type' => 'application/json']),
             (new StreamFactory())->createStream($data)
         );
     }

@@ -786,6 +786,10 @@ video {
   height: 2rem;
 }
 
+.h-80 {
+  height: 20rem;
+}
+
 .h-9 {
   height: 2.25rem;
 }
@@ -796,10 +800,6 @@ video {
 
 .h-full {
   height: 100%;
-}
-
-.h-80 {
-  height: 20rem;
 }
 
 .w-0 {
@@ -934,6 +934,10 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .rounded {
@@ -1379,6 +1383,10 @@ video {
 
 .error-input input{
   border: 1px solid #EF4444;
+}
+
+.search-block__result{
+  max-height: 288px;
 }
 
 .hover\:bg-blue-100:hover {

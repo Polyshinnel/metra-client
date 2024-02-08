@@ -211,3 +211,64 @@ $('#update-password').click(function (e){
         });
     }
 })
+
+
+$(document).ready(function() {
+    let result = $('.search-block__result');
+
+    if(result.length > 0) {
+        let searchInput = $('#product-search');
+        $(searchInput).on('keyup', function () {
+            let query = $(this).val()
+            if((query !== '') && (query.length > 3)) {
+                $.ajax({
+                    type: "POST",
+                    url: "/search",
+                    data: {'query': query},
+                    success: function (msg) {
+                        if (msg.products.length > 0) {
+                            result.html('')
+                            let products = msg.products
+                            for(let i=0; i < products.length; i++) {
+                                let elem = '<li class="bg-white hover:bg-blue-50 transition-all duration-300">\n' +
+                                    '                        <a href="/catalog/product/'+products[i].id+'">\n' +
+                                    '                            <div class="search-block__result-item flex items-start py-2 px-3 border-b border-gray-400">\n' +
+                                    '                                <div class="search-block__result-item-img w-11 h-11 flex items-center justify-center">\n' +
+                                    '                                    <img src="'+products[i].img+'" alt="" class="w-full h-full object-cover">\n' +
+                                    '                                </div>\n' +
+                                    '\n' +
+                                    '                                <p class="ml-3 text-xs">'+products[i].name+'</p>\n' +
+                                    '                            </div>\n' +
+                                    '                        </a>\n' +
+                                    '                    </li>';
+                                result.append(elem)
+                            }
+                            result.fadeIn();
+                        } else {
+                            result.html('')
+                            result.fadeOut(200)
+                        }
+                    }
+                })
+            }
+
+        });
+
+        $(document).on('click', function(e){
+            if (!$(e.target).closest('.search-block').length){
+                result.html('');
+                result.fadeOut(100);
+            }
+        });
+
+        $(searchInput).keydown(function(e) {
+            if(e.keyCode === 13) {
+                let query = $(this).val()
+                let url = '/search?query='+encodeURI(query)
+                window.location.href = url;
+            }
+        });
+    }
+
+
+})
