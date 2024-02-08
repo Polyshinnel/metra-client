@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\NotificationModel;
 use App\Models\UserNotificationModel;
 
 class UserNotificationRepository
@@ -13,11 +14,27 @@ class UserNotificationRepository
         $this->userNotificationModel = $userNotificationModel;
     }
 
-    public function selectNotification($userId): ?array {
-        return $this->userNotificationModel::where('user_id', $userId)->orderBy('date_create', 'DESC')->get()->toArray();
+    public function getUserNotifications($userId): ?array {
+        return $this->userNotificationModel::select(
+            'user_notifications.status',
+            'notifications.notification_title',
+            'notifications.notification_text',
+            'notifications.notification_type',
+            'notifications.date_publish',
+        )
+            ->leftjoin('notifications', 'user_notifications.notification_id', '=', 'notifications.id')
+            ->where('user_notifications.user_id', $userId)
+            ->where('notifications.publish_status',1)
+            ->orderBy('notifications.date_publish', 'DESC')
+            ->get()
+            ->toArray();
     }
 
-    public function updateNotification($userId, $updateArr): void {
+    public function getUnreadNotifications(int $userId): ?array {
+        return $this->userNotificationModel::where('status', 0)->get()->toArray();
+    }
+
+    public function updateNotification(int $userId, array $updateArr): void {
         $this->userNotificationModel::where('user_id', $userId)->update($updateArr);
     }
 }
