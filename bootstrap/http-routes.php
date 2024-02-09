@@ -5,6 +5,7 @@ use App\Pages\AcademyPage;
 use App\Pages\AddMaterialsPage;
 use App\Pages\AuthPage;
 use App\Pages\CatalogPage;
+use App\Pages\ClientPage;
 use App\Pages\ForgottenPage;
 use App\Pages\IndexPage;
 use App\Pages\NewsPage;
@@ -42,7 +43,8 @@ return static function (App $app): void {
         $group->get('profile/change-password',[ProfilePage::class,'changePassword']);
         $group->get('notification',[ProfilePage::class,'notification']);
         $group->post('notification/update-status',[ProfilePage::class,'updateNotificaionStatus']);
-        $group->get('clients',[ProfilePage::class,'clients']);
+
+        $group->get('clients',[ClientPage::class,'get']);
 
         $group->post('profile', [ProfilePage::class,'updateProfile']);
         $group->post('profile/change-password', [ProfilePage::class,'updatePassword']);

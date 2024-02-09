@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Controllers;
+use App\Repository\ClientsRepository;
+
+class ClientController
+{
+    private ClientsRepository $clientsRepository;
+
+    public function __construct(ClientsRepository $clientsRepository) {
+        $this->clientsRepository = $clientsRepository;
+    }
+
+    public function getClients(int $userId): ?array {
+        return $this->clientsRepository->getAllRecords($userId);
+    }
+
+    public function updateRecord(int $recordId, $params): void {
+        $updateArr = [
+            'inn' => $params['inn'],
+            'name' => $params['name'],
+            'address' => $params['address'],
+            'contact_name' => $params['contact_name'],
+            'phone' => $params['phone']
+        ];
+        $this->clientsRepository->updateRecord($recordId, $updateArr);
+    }
+
+    public function deleteRecord(int $id): void {
+        $this->clientsRepository->deleteRecord($id);
+    }
+}

@@ -142,23 +142,6 @@ class ProfilePage
         );
     }
 
-    public function clients(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
-        $userId = $_COOKIE['user'];
-        $userData = $this->userController->getUserById($userId);
-
-        $data = $this->twig->fetch('profile/clients.twig', [
-            'title' => 'Оповещения',
-            'user_name' => $userData['name']
-        ]);
-
-
-        return new Response(
-            200,
-            new Headers(['Content-Type' => 'text/html']),
-            (new StreamFactory())->createStream($data)
-        );
-    }
 
     public function changePassword(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
@@ -167,7 +150,8 @@ class ProfilePage
 
         $data = $this->twig->fetch('profile/change-password.twig', [
             'title' => 'Смена пароля',
-            'user_name' => $userData['name']
+            'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
         ]);
 
 
