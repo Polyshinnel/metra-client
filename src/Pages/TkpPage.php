@@ -33,7 +33,8 @@ class TkpPage
 
         $data = $this->twig->fetch('tkp/tkp-construct.twig', [
             'title' => 'Конструктор ТКП',
-            'user_name' => $userData['name']
+            'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
         ]);
 
 

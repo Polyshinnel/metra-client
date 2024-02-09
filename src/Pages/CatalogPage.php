@@ -47,6 +47,7 @@ class CatalogPage
         $data = $this->twig->fetch('catalog/catalog.twig', [
             'title' => 'Каталог',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'categories' => $categories,
             'products' => [],
             'category_info' => ['id' => '', 'name' => 'Каталог'],
@@ -75,6 +76,7 @@ class CatalogPage
         $data = $this->twig->fetch('catalog/catalog.twig', [
             'title' => 'Каталог',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'categories' => $categories,
             'products' => $products,
             'category_info' => $categoryInfo,
@@ -100,6 +102,7 @@ class CatalogPage
         $data = $this->twig->fetch('catalog/product.twig', [
             'title' => 'Каталог',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'product' => $productArr[0],
             'parent_category' => $parentArr
         ]);
@@ -129,6 +132,7 @@ class CatalogPage
         $data = $this->twig->fetch('catalog/search.twig', [
             'title' => 'Поиск',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'query' => $query,
             'products' => $products
         ]);

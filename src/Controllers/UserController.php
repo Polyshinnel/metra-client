@@ -11,12 +11,14 @@ class UserController
 {
     private UserRepository $userRepository;
     private CommonUtil $commonUtils;
+    private NotificationController $notificationController;
 
 
-    public function __construct(UserRepository $userRepository, CommonUtil $commonUtils)
+    public function __construct(UserRepository $userRepository, CommonUtil $commonUtils, NotificationController $notificationController)
     {
         $this->userRepository = $userRepository;
         $this->commonUtils = $commonUtils;
+        $this->notificationController = $notificationController;
     }
 
     public function authUser($login, $password): ?array {
@@ -94,7 +96,10 @@ class UserController
 
     public function getUserById($id): ?array {
         $result = $this->userRepository->getUser(['id' => $id]);
+
         if(!empty($result)) {
+            $notificationCount = $this->notificationController->getUnreadNotifications($id);
+            $result[0]['notification_count'] = $notificationCount;
             return $result[0];
         }
 

@@ -272,3 +272,18 @@ $(document).ready(function() {
 
 
 })
+
+
+$('.mark-read').click(function () {
+    let notificationId = $(this).attr('data-item')
+    $.ajax({
+        type: "POST",
+        url: "/notification/update-status",
+        data: {'notification_id': notificationId},
+        success: function (msg) {
+            if(msg.msg == 'success') {
+                location.reload();
+            }
+        }
+    })
+})

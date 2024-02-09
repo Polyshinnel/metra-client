@@ -9,7 +9,7 @@ class NotificationController
 {
     private UserNotificationRepository $userNotificationRepository;
     public function __construct(
-        UserNotificationRepository $userNotificationRepository,
+        UserNotificationRepository $userNotificationRepository
     )
     {
         $this->userNotificationRepository = $userNotificationRepository;
@@ -26,5 +26,17 @@ class NotificationController
             $unreadCount = count($result);
         }
         return $unreadCount;
+    }
+
+    public function updateNotificationStatus(int $userId, int $notificationId): void {
+        $filter = [
+            'user_id' => $userId,
+            'notification_id' => $notificationId
+        ];
+
+        $updateArr = [
+            'status' => 1
+        ];
+        $this->userNotificationRepository->updateNotification($filter, $updateArr);
     }
 }

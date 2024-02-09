@@ -4,6 +4,7 @@
 namespace App\Pages;
 
 
+use App\Controllers\NotificationController;
 use App\Controllers\UserController;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,12 +19,14 @@ class ProfilePage
     private Twig $twig;
     private ResponseFactoryInterface $responseFactory;
     private UserController $userController;
+    private NotificationController $notificationController;
 
-    public function __construct(Twig $twig, ResponseFactoryInterface $responseFactory, UserController $userController)
+    public function __construct(Twig $twig, ResponseFactoryInterface $responseFactory, UserController $userController, NotificationController $notificationController)
     {
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->userController = $userController;
+        $this->notificationController = $notificationController;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -34,6 +37,7 @@ class ProfilePage
         $data = $this->twig->fetch('profile/profile.twig', [
             'title' => 'Профиль',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'email' => $userData['mail'],
             'inn' => $userData['inn'],
             'org_name' => $userData['org_name'],
@@ -100,16 +104,39 @@ class ProfilePage
     {
         $userId = $_COOKIE['user'];
         $userData = $this->userController->getUserById($userId);
+        $notifications = $this->notificationController->getUserNotifications($userId);
 
         $data = $this->twig->fetch('profile/notification.twig', [
             'title' => 'Оповещения',
-            'user_name' => $userData['name']
+            'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
+            'notifications' => $notifications
         ]);
 
 
         return new Response(
             200,
             new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function updateNotificaionStatus(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $params = $request->getParsedBody();
+        $jsonArr = [
+            'msg' => 'err'
+        ];
+        if(isset($params['notification_id'])) {
+            $this->notificationController->updateNotificationStatus($userId, $params['notification_id']);
+            $jsonArr['msg'] = 'success';
+        }
+
+        $data = json_encode($jsonArr);
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
             (new StreamFactory())->createStream($data)
         );
     }

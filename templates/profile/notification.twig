@@ -12,38 +12,39 @@
         </div>
 
         <div class="notification-wrapper">
-            <div class="notification-empty mt-8 hidden">
-                <h2 class="text-lg font-light">На данный момент уведомления отсутствуют!</h2>
-                <a href="/"><button class="bg-blue-600 text-white rounded py-2 px-4 mt-5">На главную</button></a>
-            </div>
-
-            <div class="notification-item flex items-start py-4 px-5 border rounded-lg border-gray-400 mt-8">
-                <div class="notification-item__img w-12 h-12 flex items-center justify-center rounded-full bg-blue-700 mt-1">
-                    <img src="/assets/img/bell.svg" alt="">
-                </div>
-                <div class="notification-item__info ml-10 w-3/4">
-                    <div class="notification-item__text">
-                        <h3 class="text-base font-medium">Оповещение о событии</h3>
-                        <p class="text-sm mt-2">С 30.10.2023 по 11.10.2023 будут проводиться работы по обслуживанию сервера</p>
-                        <p class="mark-read text-xs text-blue-600 cursor-pointer text-blue-600 hover:text-blue-800 transition-all duration-300 mt-1">Отметить как прочитанное</p>
+            {% if notifications %}
+                {% for notification in notifications %}
+                    <div class="notification-item flex items-start py-4 px-5 border rounded-lg border-gray-400 mt-8">
+                        <div class="notification-item__img w-12 h-12 flex items-center justify-center rounded-full bg-blue-700 mt-1">
+                            {% if notification.notification_type == 1 %}
+                                <img src="/assets/img/bell.svg" alt="">
+                            {% else %}
+                                <img src="/assets/img/alert.svg" alt="">
+                            {% endif %}
+                        </div>
+                        <div class="notification-item__info ml-10 w-3/4">
+                            <div class="notification-item__text">
+                                <h3 class="text-base font-medium">{{ notification.notification_title }}</h3>
+                                <p class="text-sm mt-2">{{ notification.notification_text }}</p>
+                                {% if not notification.status %}
+                                    <p class="mark-read text-xs text-blue-600 cursor-pointer text-blue-600 hover:text-blue-800 transition-all duration-300 mt-1" data-item="{{ notification.notification_id }}">Отметить как прочитанное</p>
+                                {% else %}
+                                    <p class="text-xs text-green-500 mt-1" >Прочитано</p>
+                                {% endif %}
+                            </div>
+                            <p class="notification-date text-gray-400 text-xs mt-1">{{ notification.date_publish }}</p>
+                        </div>
                     </div>
-                    <p class="notification-date text-gray-400 text-xs mt-1">30.10.2023 15:00:00</p>
+                {% endfor %}
+            {% else %}
+                <div class="notification-empty mt-8 hidden">
+                    <h2 class="text-lg font-light">На данный момент уведомления отсутствуют!</h2>
+                    <a href="/"><button class="bg-blue-600 text-white rounded py-2 px-4 mt-5">На главную</button></a>
                 </div>
-            </div>
+            {% endif %}
 
-            <div class="notification-item flex items-start py-4 px-5 border rounded-lg border-gray-400 mt-5">
-                <div class="notification-item__img w-12 h-12 flex items-center justify-center rounded-full bg-blue-700 mt-1">
-                    <img src="/assets/img/alert.svg" alt="">
-                </div>
-                <div class="notification-item__info ml-10 w-3/4">
-                    <div class="notification-item__text">
-                        <h3 class="text-base font-medium">Оповещение о событии</h3>
-                        <p class="text-sm mt-2">С 30.10.2023 по 11.10.2023 будут проводиться работы по обслуживанию сервера</p>
-                        <p class="mark-read text-xs text-blue-600 cursor-pointer text-blue-600 hover:text-blue-800 transition-all duration-300 mt-1">Отметить как прочитанное</p>
-                    </div>
-                    <p class="notification-date text-gray-400 text-xs mt-1">30.10.2023 15:00:00</p>
-                </div>
-            </div>
+
+
         </div>
     </div>
 </main>

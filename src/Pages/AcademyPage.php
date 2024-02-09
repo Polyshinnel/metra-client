@@ -48,6 +48,7 @@ class AcademyPage
         $data = $this->twig->fetch('academy/academy.twig', [
             'title' => 'Академия метра',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'academy_categories' => $academyCategories
         ]);
 
@@ -68,6 +69,7 @@ class AcademyPage
         $data = $this->twig->fetch('academy/academy-category.twig', [
             'title' => 'Академия метра',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'category_content' => $categoryContent
         ]);
 
@@ -87,6 +89,7 @@ class AcademyPage
         $data = $this->twig->fetch('academy/academy-content-page.twig', [
             'title' => 'Академия метра',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'content_data' => $content
         ]);
 
@@ -106,6 +109,7 @@ class AcademyPage
         $data = $this->twig->fetch('academy/vebinars.twig', [
             'title' => 'Вебинары',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'vebinars' => $vebinars
         ]);
 
@@ -125,6 +129,7 @@ class AcademyPage
         $data = $this->twig->fetch('academy/vebinar-page.twig', [
             'title' => 'Вебинары',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'vebinar_data' => $vebinarData
         ]);
 

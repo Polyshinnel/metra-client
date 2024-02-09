@@ -43,6 +43,7 @@ class NewsPage
         $data = $this->twig->fetch('news/news.twig', [
             'title' => 'Новости',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'news' => $news
         ]);
 
@@ -64,6 +65,7 @@ class NewsPage
         $data = $this->twig->fetch('news/news-article.twig', [
             'title' => 'Новости',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'news_data' => $newsData
         ]);
 

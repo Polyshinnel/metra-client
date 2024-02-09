@@ -43,6 +43,7 @@ class AddMaterialsPage
         $data = $this->twig->fetch('add-materials/add-materials.twig', [
             'title' => 'Доп.материалы',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'categories' => $categories
         ]);
 
@@ -63,6 +64,7 @@ class AddMaterialsPage
         $data = $this->twig->fetch('add-materials/add-materials-category.twig', [
             'title' => 'Доп.материалы',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'category_data' => $categoryData
         ]);
 

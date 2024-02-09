@@ -51,6 +51,7 @@ class IndexPage
         $data = $this->twig->fetch('index.twig', [
             'title' => 'Главная',
             'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
             'banners' => $banners,
             'news' => $news,
             'vebinars' => $vebinars

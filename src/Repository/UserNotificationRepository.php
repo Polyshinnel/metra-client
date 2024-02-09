@@ -21,6 +21,7 @@ class UserNotificationRepository
             'notifications.notification_text',
             'notifications.notification_type',
             'notifications.date_publish',
+            'user_notifications.notification_id'
         )
             ->leftjoin('notifications', 'user_notifications.notification_id', '=', 'notifications.id')
             ->where('user_notifications.user_id', $userId)
@@ -34,7 +35,7 @@ class UserNotificationRepository
         return $this->userNotificationModel::where('status', 0)->get()->toArray();
     }
 
-    public function updateNotification(int $userId, array $updateArr): void {
-        $this->userNotificationModel::where('user_id', $userId)->update($updateArr);
+    public function updateNotification(array $filter, array $updateArr): void {
+        $this->userNotificationModel::where($filter)->update($updateArr);
     }
 }
