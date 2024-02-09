@@ -106,6 +106,7 @@ class ProfilePage
         $userData = $this->userController->getUserById($userId);
         $notifications = $this->notificationController->getUserNotifications($userId);
 
+
         $data = $this->twig->fetch('profile/notification.twig', [
             'title' => 'Оповещения',
             'user_name' => $userData['name'],
