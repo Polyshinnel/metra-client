@@ -44,7 +44,7 @@ return static function (App $app): void {
         $group->get('notification',[ProfilePage::class,'notification']);
         $group->post('notification/update-status',[ProfilePage::class,'updateNotificaionStatus']);
 
-        $group->get('clients',[ClientPage::class,'get']);
+
 
         $group->post('profile', [ProfilePage::class,'updateProfile']);
         $group->post('profile/change-password', [ProfilePage::class,'updatePassword']);
@@ -55,6 +55,14 @@ return static function (App $app): void {
         $group->get('search',[CatalogPage::class,'search']);
         $group->post('search',[CatalogPage::class,'post_search']);
     })->add(BasicAuthMiddleware::class);;
+
+    $app->group('/clients', function (RouteCollectorProxy $group) {
+        $group->get('',[ClientPage::class,'get']);
+        $group->post('/create',[ClientPage::class,'create']);
+        $group->post('/update',[ClientPage::class,'update']);
+        $group->post('/delete',[ClientPage::class,'delete']);
+        $group->post('/get-by-id',[ClientPage::class,'getById']);
+    });
 
     $app->group('/catalog', function (RouteCollectorProxy $group) {
         $group->get('',[CatalogPage::class,'get']);

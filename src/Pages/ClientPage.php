@@ -50,4 +50,53 @@ class ClientPage
         );
     }
 
+    public function create(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $params = $request->getParsedBody();
+        $data = $this->clientController->createClient($userId, $params);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function update(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $data = $this->clientController->updateClient($params);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function delete(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $data = $this->clientController->deleteRecord($params['client_id']);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+
+    public function getById(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $data = $this->clientController->getClientById($params['client_id']);
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
 }

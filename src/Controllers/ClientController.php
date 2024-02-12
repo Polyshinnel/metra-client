@@ -15,7 +15,23 @@ class ClientController
         return $this->clientsRepository->getAllRecords($userId);
     }
 
-    public function updateRecord(int $recordId, $params): void {
+    public function createClient(int $userId, array $params): string {
+        $createArr = [
+            'user_id' => $userId,
+            'inn' => $params['inn'],
+            'name' => $params['name'],
+            'address' => $params['address'],
+            'contact_name' => $params['contact_name'],
+            'phone' => $params['phone']
+        ];
+        $this->clientsRepository->createRecord($createArr);
+        $jsonArr = [
+            'msg' => 'client was created'
+        ];
+        return json_encode($jsonArr);
+    }
+
+    public function updateClient($params): string {
         $updateArr = [
             'inn' => $params['inn'],
             'name' => $params['name'],
@@ -23,10 +39,23 @@ class ClientController
             'contact_name' => $params['contact_name'],
             'phone' => $params['phone']
         ];
-        $this->clientsRepository->updateRecord($recordId, $updateArr);
+        $this->clientsRepository->updateRecord($params['client_id'], $updateArr);
+        $jsonArr = [
+            'msg' => 'client was updated'
+        ];
+        return json_encode($jsonArr);
     }
 
-    public function deleteRecord(int $id): void {
+    public function deleteRecord(int $id): string {
         $this->clientsRepository->deleteRecord($id);
+        $jsonArr = [
+            'msg' => 'client was deleted'
+        ];
+        return json_encode($jsonArr);
+    }
+
+    public function getClientById(int $id): string {
+        $result = $this->clientsRepository->getRecordById($id);
+        return json_encode($result, JSON_UNESCAPED_UNICODE);
     }
 }

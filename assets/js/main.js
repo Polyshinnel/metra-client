@@ -287,3 +287,135 @@ $('.mark-read').click(function () {
         }
     })
 })
+
+$('.create-client').click(function () {
+    let innSelector = $('#inn');
+    let orgSelector = $('#company-name');
+    let addrSelector = $('#company-addr');
+    let nameSelector = $('#contact-name');
+    let phoneSelector = $('#contact-phone');
+    let attr = $(this).attr('data-role')
+
+    let flag = 0;
+
+    let name = nameSelector.val()
+    let nameArr = name.split(' ')
+
+    if(nameArr.length < 2) {
+        nameSelector.parent().addClass('error-input')
+        flag++
+    }
+
+    let organization = orgSelector.val()
+    if(organization.length < 4) {
+        orgSelector.parent().addClass('error-input')
+        flag++
+    }
+
+
+    let phone = phoneSelector.val()
+    let clearPhone = phone.replace(/[^0-9]/g, '');
+    if(clearPhone.length < 8) {
+        phoneSelector.parent().addClass('error-input')
+        flag++
+    }
+
+    let inn = innSelector.val()
+    if(inn.length < 9) {
+        innSelector.parent().addClass('error-input')
+        flag++
+    }
+
+    let addr = addrSelector.val()
+    if(addr.length < 10) {
+        addrSelector.parent().addClass('error-input')
+        flag++
+    }
+
+    if(attr === 'create') {
+        $.ajax({
+            type: "POST",
+            url: "/clients/create",
+            data: {
+                'inn': inn,
+                'name': organization,
+                'address': addr,
+                'contact_name': name,
+                'phone': phone
+            },
+            success: function (msg) {
+                if(msg.msg === 'client was created') {
+                    location.reload();
+                }
+            }
+        })
+    }
+
+    if(attr === 'update') {
+        let clientId = $(this).attr('data-id');
+        $.ajax({
+            type: "POST",
+            url: "/clients/update",
+            data: {
+                'client_id': clientId,
+                'inn': inn,
+                'name': organization,
+                'address': addr,
+                'contact_name': name,
+                'phone': phone
+            },
+            success: function (msg) {
+                if(msg.msg === 'client was updated') {
+                    location.reload();
+                }
+            }
+        })
+    }
+})
+
+
+$('.edit-client-btn').click(function (){
+    let id = $(this).attr('data-item')
+    let selector = $('.create-client')
+    selector.attr('data-id', id)
+    selector.attr('data-role', 'update')
+
+    let innSelector = $('#inn');
+    let orgSelector = $('#company-name');
+    let addrSelector = $('#company-addr');
+    let nameSelector = $('#contact-name');
+    let phoneSelector = $('#contact-phone');
+    $('.create-client').html('Обновить данные')
+
+    $.ajax({
+        type: "POST",
+        url: "/clients/get-by-id",
+        data: {
+            'client_id': id,
+        },
+        success: function (data) {
+            innSelector.val(data.inn)
+            orgSelector.val(data.name)
+            addrSelector.val(data.address)
+            nameSelector.val(data.contact_name)
+            phoneSelector.val(data.phone)
+        }
+    })
+
+    Fancybox.show([{ src: "#add-client-form", type: "inline" }]);
+})
+
+$('.delete-client-btn').click(function () {
+    let id = $(this).attr('data-item')
+    $.ajax({
+        type: "POST",
+        url: "/clients/delete",
+        data: {
+            'client_id': id,
+        },
+        success: function (data) {
+            location.reload();
+        }
+    })
+
+})

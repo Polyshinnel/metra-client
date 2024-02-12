@@ -65,35 +65,40 @@
             <div class="input-block flex flex-col w-full mt-3">
                 <label for="inn" class="text-sm font-semibold">ИНН</label>
                 <input type="text" name="inn" id="inn" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="4025012510">
+                <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корретный инн!</p>
             </div>
             <!--/.input-block-->
 
             <div class="input-block flex flex-col w-full mt-3">
                 <label for="company-name" class="text-sm font-semibold">Название</label>
                 <input type="text" name="company-name" id="company-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="ООО НПП МЕТРА">
+                <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректное название!</p>
             </div>
             <!--/.input-block-->
 
             <div class="input-block flex flex-col w-full mt-3">
                 <label for="company-addr" class="text-sm font-semibold">Юр. Адрес</label>
                 <input type="text" name="company-addr" id="company-addr" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Заречная 18В">
+                <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректный адрес!</p>
             </div>
             <!--/.input-block-->
 
             <div class="input-block flex flex-col w-full mt-3">
                 <label for="contact-name" class="text-sm font-semibold">ФИО Контактного Лица</label>
                 <input type="text" name="contact-name" id="contact-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="Иванов И.И.">
+                <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректное ФИО!</p>
             </div>
             <!--/.input-block-->
 
             <div class="input-block flex flex-col w-full mt-3">
                 <label for="contact-phone" class="text-sm font-semibold">Телефон</label>
                 <input type="text" name="contact-phone" id="contact-phone" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="+7(999)999-99-99">
+                <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректный телефон!</p>
             </div>
             <!--/.input-block-->
         </div>
 
-        <button class="mt-6 w-full px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300">Новый клиент</button>
+        <button class="mt-6 w-full px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300 create-client" data-role="create">Новый клиент</button>
     </div>
 
     <script src="/assets/js/list.min.js"></script>

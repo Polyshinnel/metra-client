@@ -30,4 +30,8 @@ class ClientsRepository implements RepositoryInterface
     public function getAllRecords(int $user_id): ?array {
         return $this->clientsModel::where('user_id', $user_id)->get()->toArray();
     }
+
+    public function getRecordById(int $recordId): ?array {
+        return $this->clientsModel::where('id', $recordId)->first()->toArray();
+    }
 }
