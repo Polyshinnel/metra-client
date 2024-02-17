@@ -1,5 +1,82 @@
 {% extends 'base.twig' %}
 
 {% block body %}
+    <main>
+        <div class="box-container">
+            <div class="page-title mt-7">
+                <h1 class="text-2xl font-semibold">Конструктор ТКП</h1>
+                <ul class="breadcrumb text-sm flex items-center mt-2">
+                    <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                    <li>Конструктор ТКП</li>
+                </ul>
+            </div>
 
+            <div class="search-block relative w-72 mt-4">
+                <input type="text" name="product-search" id="product-search" class="border border-gray-400 rounded-md px-4 h-10 w-72 text-sm" placeholder="Название весов">
+                <img src="/assets/img/search.svg" alt="" class="absolute top-2 right-2">
+
+                <ul class="search-block__result absolute top-full z-50 bg-white rounded-md overflow-hidden border border-gray-400 hidden">
+                    <li class="bg-white hover:bg-blue-50 transition-all duration-300">
+                        <a href="#">
+                            <div class="search-block__result-item flex items-start py-2 px-3 border-b border-gray-400">
+                                <div class="search-block__result-item-img w-11 h-11 flex items-center justify-center">
+                                    <img src="/assets/img/tkp/auto.svg" alt="" class="w-full h-full object-contain">
+                                </div>
+
+                                <p class="ml-3 text-xs">Абсолют цифровые 60/100-24 (М8200А-60/100-0-1-24-010)</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!--/search-block-->
+
+            <section class="select-tkp-block mt-8">
+                <h2 class="font-semibold text-lg">Подбор весов по параметрам</h2>
+
+                <div class="select-tkp flex mt-5 -ml-3">
+                    {% if categories %}
+                        {% for category in categories %}
+                            <a href="/tkp-construct?category={{ category.id }}">
+                                <div class="select-tkp__item cursor-pointer {% if category.active %} select-tkp__item_active {% endif %} w-28 ml-3" data-item="{{ category.id }}">
+                                    <div class="select-tkp__item-img w-28  h-28 rounded-lg border border-blue-600 flex items-center justify-center hover:bg-blue-50 transition-all duration-300">
+                                        <img src="{{ category.img }}" alt="">
+                                    </div>
+                                    <p class="text-xs text-center mt-2">{{ category.name }}</p>
+                                </div>
+                                <!--/select-tkp__item-->
+                            </a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </section>
+
+            <div class="select-tkp-block__params mt-10">
+                <h2 class="font-semibold text-lg">Параметры весового оборудования</h2>
+                <div class="select-tkp-block__params-wrapper flex items-start mt-3">
+                    <div class="select-tkp-block__params-column flex flex-wrap -ml-5">
+                        {% if category_params %}
+                            {% for category_param in category_params %}
+                                <div class="input-block flex flex-col w-72 mt-3 ml-5">
+                                    <label for="category_param_id_{{ category_param.id }}">{{ category_param.name }}</label>
+                                    <select name="category_param_id_{{ category_param.id }}" id="category_param_id_{{ category_param.id }}" class="border border-gray-400 mt-2 h-10 rounded px-3" data-id="{{ category_param.id }}">
+                                        {% if category_param.chars %}
+                                            {% for char in category_param.chars %}
+                                                <option value="{{ char }}">{{ char }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </div>
+                                <!--/.input-block-->
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <!--/select-tkp-block__params-column-->
+                </div>
+
+                <button class="mt-8 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Подобрать весы</button>
+            </div>
+        </div>
+    </main>
 {% endblock %}
