@@ -47,6 +47,12 @@ class TkpPage
         $tkpCategories = $this->tkpController->getTkpCategories($activeCategory);
         $tkpCategoriesParams = $this->tkpController->getTkpCategoriesParams($activeCategory);
 
+        $params = [
+            '2' => 'Пандус',
+            '5' => '30-40т',
+        ];
+        $tkpList = $this->tkpController->filteredTkpByChars($params, $activeCategory);
+        print_r($tkpList);
 
         $data = $this->twig->fetch('tkp/tkp-construct.twig', [
             'title' => 'Конструктор ТКП',

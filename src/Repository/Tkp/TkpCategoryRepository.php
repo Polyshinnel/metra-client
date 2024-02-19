@@ -31,6 +31,10 @@ class TkpCategoryRepository implements RepositoryInterface
         return $this->tkpCategory::all()->toArray();
     }
 
+    public function getCategoryById(int $id): ?array {
+        return $this->tkpCategory::where('id',$id)->first()->toArray();
+    }
+
     public function getTkpCategoryParams(int $categoryId): ?array {
         return $this->tkpCategory::select(
             'tkp_params.id',
@@ -56,4 +60,5 @@ class TkpCategoryRepository implements RepositoryInterface
             ->get()
             ->toArray();
     }
+
 }

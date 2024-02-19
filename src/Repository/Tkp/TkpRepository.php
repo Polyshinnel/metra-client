@@ -29,4 +29,22 @@ class TkpRepository implements RepositoryInterface
         $this->tkp::where('id', $id)->delete();
     }
 
+    public function filteredTkpByChars(int $categoryId, array $tkpParams, array $tkpValues, int $count): ?array {
+        return $this->tkp::select(
+            'tkp_chars.tkp_id',
+            'tkp.name'
+        )
+            ->leftjoin('tkp_chars','tkp.id','=','tkp_chars.tkp_id')
+            ->where('tkp.category_id',$categoryId)
+            ->whereIn('tkp_chars.tkp_param_id',$tkpParams)
+            ->whereIn('tkp_chars.value',$tkpValues)
+            ->groupBy('tkp_chars.tkp_id')
+            ->havingRaw('COUNT(*) ='.$count)
+            ->get()
+            ->toArray();
+    }
+
+    public function filteredTkp(array $filter): ?array {
+        return $this->tkp::where($filter)->get()->toArrau();
+    }
 }

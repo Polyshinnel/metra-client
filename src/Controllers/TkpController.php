@@ -63,4 +63,15 @@ class TkpController
         ];
         return $this->tkpCategoryRepository->getFilteredTkpParams($filter);
     }
+
+    public function filteredTkpByChars(array $params, int $categoryId): ?array {
+        $tkpParams = [];
+        $tkpValues = [];
+        $count = count($params);
+        foreach ($params as $key=>$value) {
+            $tkpParams[] = $key;
+            $tkpValues[] = $value;
+        }
+        return $this->tkpRepository->filteredTkpByChars($categoryId,$tkpParams,$tkpValues,$count);
+    }
 }
