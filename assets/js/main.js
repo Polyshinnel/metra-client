@@ -419,3 +419,142 @@ $('.delete-client-btn').click(function () {
     })
 
 })
+
+
+$(document).ready(function() {
+    let result = $('.search-block__result');
+
+    if(result.length > 0) {
+        let searchInput = $('#tkp-search');
+        $(searchInput).on('keyup', function () {
+            let query = $(this).val()
+            if((query !== '') && (query.length > 3)) {
+                $.ajax({
+                    type: "POST",
+                    url: "/tkp/search",
+                    data: {'query': query},
+                    success: function (msg) {
+                        if (msg.length > 0) {
+                            result.html('')
+                            for(let i=0; i < msg.length; i++) {
+                                let elem = '<li class="bg-white hover:bg-blue-50 transition-all duration-300">\n' +
+                                    '                        <a href="/tkp/tkp-create/'+msg[i].id+'">\n' +
+                                    '                            <div class="search-block__result-item flex items-start py-2 px-3 border-b border-gray-400">\n' +
+                                    '                                <div class="search-block__result-item-img w-11 h-11 flex items-center justify-center">\n' +
+                                    '                                    <img src="'+msg[i].img+'" alt="" class="object-cover">\n' +
+                                    '                                </div>\n' +
+                                    '\n' +
+                                    '                                <p class="ml-3 text-xs">'+msg[i].name+'</p>\n' +
+                                    '                            </div>\n' +
+                                    '                        </a>\n' +
+                                    '                    </li>';
+                                result.append(elem)
+                            }
+                            result.fadeIn();
+                        } else {
+                            result.html('')
+                            result.fadeOut(200)
+                        }
+                    }
+                })
+            }
+
+        });
+
+        $(document).on('click', function(e){
+            if (!$(e.target).closest('.search-block').length){
+                result.html('');
+                result.fadeOut(100);
+            }
+        });
+    }
+
+
+})
+
+function getTkpParamsUrl() {
+    let SearchParams = decodeURIComponent(window.location.search);
+    let SearchParamsArr = SearchParams.split('&');
+    let clearParamObj = {}
+    for(let i = 0; i < SearchParamsArr.length; i++) {
+        let param = SearchParamsArr[i]
+        param = param.replace('?','');
+        param = param.replace('[]','');
+        param = param.split('=')
+
+        if(clearParamObj[param[0]] !== undefined) {
+            if(typeof(clearParamObj[param[0]]) != 'object') {
+                clearParamObj[param[0]] = [clearParamObj[param[0]], param[1]]
+            } else {
+                let arr = clearParamObj[param[0]];
+                arr.push(param[1])
+                clearParamObj[param[0]] = arr
+            }
+        } else {
+            clearParamObj[param[0]] = param[1];
+        }
+    }
+    return clearParamObj
+}
+
+
+let url = $.param(getTkpParamsUrl())
+
+$('.next-tkp-step').click(function () {
+    let params = getTkpParamsUrl()
+    let selector = $('.input-block-select select')
+    let paramId = selector.attr('data-id')
+    let paramVal = selector.val()
+
+    if(params['category'] === undefined) {
+        params['category'] = 1
+    }
+
+    if(params['tkp_params'] === undefined) {
+        console.log('empty!')
+        params['tkp_params'] = [paramId]
+        params['tkp_values'] = [paramVal]
+    } else {
+        let paramArr = params['tkp_params'];
+        let valArr = params['tkp_values'];
+
+        if(typeof(params['tkp_params']) != 'object') {
+            paramArr = [params['tkp_params'], paramId];
+            valArr = [params['tkp_values'], paramVal];
+        } else {
+            paramArr.push(paramId);
+            valArr.push(paramVal);
+        }
+
+
+        params['tkp_params'] = paramArr;
+        params['tkp_values'] = valArr;
+    }
+    window.location.href = '/tkp?'+$.param(params)
+})
+
+
+$('.create-tkp-step').click(function () {
+    let params = getTkpParamsUrl()
+    let selector = $('.input-block-select select')
+    let paramId = selector.attr('data-id')
+    let paramVal = selector.val()
+
+
+    let paramArr = params['tkp_params'];
+    let valArr = params['tkp_values'];
+
+    
+    if(typeof(params['tkp_params']) != 'object') {
+        paramArr = [params['tkp_params'], paramId];
+        valArr = [params['tkp_values'], paramVal];
+    } else {
+        paramArr.push(paramId);
+        valArr.push(paramVal);
+    }
+
+
+    params['tkp_params'] = paramArr;
+    params['tkp_values'] = valArr;
+    window.location.href = '/tkp/results?'+$.param(params)
+})

@@ -26,4 +26,8 @@ class TkpCharsRepository implements RepositoryInterface
     {
         $this->tkpChars::where('id', $id)->delete();
     }
+
+    public function getRecordByTkp(int $tkpId): ?array {
+        return $this->tkpChars::where('tkp_id',$tkpId)->orderBy('tkp_param_id','ASC')->get()->toArray();
+    }
 }

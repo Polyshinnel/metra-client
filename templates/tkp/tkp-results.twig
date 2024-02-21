@@ -1,0 +1,57 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+<main>
+    <div class="box-container">
+        <div class="page-title mt-7">
+            <h1 class="text-2xl font-semibold">Генерация ТКП</h1>
+            <ul class="breadcrumb text-sm flex items-center mt-2">
+                <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                <li><a href="/tkp" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Конструктор ТКП</a>&nbsp;/&nbsp;</li>
+                <li>Выбор весов</li>
+            </ul>
+        </div>
+
+        <section class="tkp-weights mt-4">
+            {% if not tkp_list %}
+            <div class="tkp-weights__empty">
+                <p>К сожалению, ничего найти не удалось</p>
+                <a href="/tkp">
+                    <button class="mt-3 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">К подбору</button>
+                </a>
+            </div>
+
+            {% else %}
+            <div class="tkp-weight-results">
+                <p>Выберете весы для которых хотите сформировать ТКП</p>
+
+
+                <div class="tkp-weight-results__list flex flex-wrap -ml-7">
+                    {% for tkp in tkp_list %}
+                        <div class="tkp-weight-results__list-item w-80 flex items-start ml-7 mt-8">
+                            <div class="tkp-weight-results__list-item-img w-20 h-20 rounded border border-blue-600 flex items-center justify-center">
+                                <img src="{{ tkp.img }}" alt="" class="w-16">
+                            </div>
+
+                            <div class="tkp-weight-results__list-item-text w-56 ml-4">
+                                <p class="tkp-weight-results__list-item-name text-sm">{{ tkp.name }}</p>
+                                <a href="/tkp/tkp-create/{{ tkp.tkp_id }}"><p class="select-btn text-blue-600 hover:text-blue-800 transition-all duration-300 mt-2 cursor-pointer">Выбрать</p></a>
+                            </div>
+                        </div>
+                        <!--/tkp-weight-results__list-item-->
+                    {% endfor %}
+                </div>
+                <!--/tkp-weight-results__list-->
+
+
+                <a href="/tkp">
+                    <button class="back-step rounded border border-blue-600 text-blue-600 px-5 py-2 mt-8 cursor-pointer hover:bg-blue-600 hover:text-white transition-all duration-300">Назад</button>
+                </a>
+
+            </div>
+            <!--/tkp-weight-results-->
+        </section>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

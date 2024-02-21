@@ -82,7 +82,10 @@ return static function (App $app): void {
         $group->get('/{path}',[AddMaterialsPage::class,'getCategory']);
     })->add(BasicAuthMiddleware::class);;
 
-    $app->group('/tkp-construct',function (RouteCollectorProxy $group) {
+    $app->group('/tkp',function (RouteCollectorProxy $group) {
         $group->get('',[TkpPage::class,'get']);
+        $group->get('/results',[TkpPage::class,'getTkpResults']);
+        $group->post('/search',[TkpPage::class,'search']);
+        $group->get('/tkp-create/{id}',[TkpPage::class,'getTkp']);
     })->add(BasicAuthMiddleware::class);;
 };

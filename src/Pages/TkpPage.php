@@ -4,6 +4,8 @@
 namespace App\Pages;
 
 
+use App\Controllers\ClientController;
+use App\Controllers\SearchController;
 use App\Controllers\TkpController;
 use App\Controllers\UserController;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -20,18 +22,25 @@ class TkpPage
     private ResponseFactoryInterface $responseFactory;
     private UserController $userController;
     private TkpController $tkpController;
+    private SearchController $searchController;
+
+    private ClientController $clientController;
 
     public function __construct(
         Twig $twig,
         ResponseFactoryInterface $responseFactory,
         UserController $userController,
-        TkpController $tkpController
+        TkpController $tkpController,
+        SearchController $searchController,
+        ClientController $clientController
     )
     {
         $this->twig = $twig;
         $this->responseFactory = $responseFactory;
         $this->userController = $userController;
         $this->tkpController = $tkpController;
+        $this->searchController = $searchController;
+        $this->clientController = $clientController;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -45,27 +54,104 @@ class TkpPage
         }
 
         $tkpCategories = $this->tkpController->getTkpCategories($activeCategory);
-        $tkpCategoriesParams = $this->tkpController->getTkpCategoriesParams($activeCategory);
 
-        $params = [
-            '2' => 'Пандус',
-            '5' => '30-40т',
-        ];
-        $tkpList = $this->tkpController->filteredTkpByChars($params, $activeCategory);
-        print_r($tkpList);
+        $tkpCategoriesParams = $this->tkpController->getTkpCategoriesParams($activeCategory);
+        $prevLink = '/tkp?category='.$activeCategory;
+        $lastStep = false;
+
+
+        if(isset($params['tkp_params']) && isset($params['tkp_values'])) {
+
+            $tkpCategoriesParams = $this->tkpController->getNextParams($params['tkp_params'], $params['tkp_values'], $activeCategory);
+            if(count($tkpCategoriesParams) == 1) {
+                $lastStep = true;
+            }
+        }
+
+        $tkpCategoriesParams = array_shift($tkpCategoriesParams);
 
         $data = $this->twig->fetch('tkp/tkp-construct.twig', [
             'title' => 'Конструктор ТКП',
             'user_name' => $userData['name'],
             'notification_count' => $userData['notification_count'],
             'categories' => $tkpCategories,
-            'category_params' => $tkpCategoriesParams
+            'category_params' => $tkpCategoriesParams,
+            'prevLink' => $prevLink,
+            'lastStep' => $lastStep
         ]);
 
 
         return new Response(
             200,
             new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+
+    public function getTkpResults(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+        $params = $request->getQueryParams();
+
+
+        $tkpList = [];
+        if(isset($params['tkp_params']) && isset($params['tkp_values'])) {
+            $tkpList = $this->tkpController->filteredTkpByChars($params['tkp_params'], $params['tkp_values'], $params['category']);
+        }
+
+        $data = $this->twig->fetch('tkp/tkp-results.twig', [
+            'title' => 'Конструктор ТКП',
+            'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
+            'tkp_list' => $tkpList
+        ]);
+
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+
+    public function getTkp(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $userId = $_COOKIE['user'];
+        $userData = $this->userController->getUserById($userId);
+        $tkpId = $args['id'];
+        $tkpData = $this->tkpController->getTkpAndMaterials($tkpId);
+        $userClients = $this->clientController->getClients($userId);
+
+        $data = $this->twig->fetch('tkp/tkp-create.twig', [
+            'title' => 'Конструктор ТКП',
+            'user_name' => $userData['name'],
+            'notification_count' => $userData['notification_count'],
+            'tkp_data' => $tkpData,
+            'user_clients' => $userClients
+        ]);
+
+
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'text/html']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+
+    public function search(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $data = '';
+        if(isset($params['query'])) {
+            $data = $this->searchController->searchTkp($params['query']);
+        }
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
             (new StreamFactory())->createStream($data)
         );
     }

@@ -1,0 +1,132 @@
+{% extends 'base.twig' %}
+
+{% block body %}
+<main class="pb-14">
+    <div class="box-container">
+        <div class="page-title mt-7">
+            <h1 class="text-2xl font-semibold">Генерация ТКП</h1>
+            <ul class="breadcrumb text-sm flex items-center mt-2">
+                <li><a href="/" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Главная</a>&nbsp;/&nbsp;</li>
+                <li><a href="/tkp" class="text-blue-600 hover:text-blue-800 transition-all duration-300">Конструктор ТКП</a>&nbsp;/&nbsp;</li>
+                <li>Генерация ТКП</li>
+            </ul>
+        </div>
+
+        <div class="tkp-generation-block mt-5">
+            <p>Введите данные для формирования ТКП и подбора строительного задания</p>
+
+            <div class="tkp-generation-block__controls mt-6">
+                <div class="tkp-generation-block__controls-line flex items-end">
+                    <div class="input-block flex flex-col w-72 mt-3">
+                        <label for="">Наименование клиента</label>
+                        <select name="" id="" class="border border-gray-400 mt-2 h-10 rounded px-3 user-clients">
+                            {% if not user_clients %}
+                                <option value="0">Нет клиентов</option>
+                            {% else %}
+                                {% for client in user_clients %}
+                                    <option value="{{ client.id }}">{{ client.name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <!--/.input-block-->
+
+                    <button class="ml-5 px-4 bg-blue-800 text-white h-10 rounded hover:bg-blue-600 transition-all duration-300" data-fancybox data-src="#add-client-form">+</button>
+                </div>
+
+
+                <div class="input-block flex flex-col w-72 mt-3">
+                    <label for="">Место установки</label>
+                    <input type="text" name="" id="" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Красных зорь, д. 13">
+                </div>
+                <!--/.input-block-->
+
+                <div class="input-block flex flex-col w-72 mt-3">
+                    <label for="">Дата окончания ТКП</label>
+                    <input type="date" name="" id="" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="13.11.2023">
+                </div>
+                <!--/.input-block-->
+
+                <button class="mt-8 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Сформировать ТКП</button>
+            </div>
+            <!--/tkp-generation-block__controls-->
+        </div>
+        <!--/tkp-generation-block-->
+
+        <div class="tkp-generations-results mt-10">
+            {% if tkp_data.tkp %}
+                <div class="tkp-generations-results__item flex items-center mt-6">
+                    <div class="tkp-generations-results__item-img w-20 h-20 border border-blue-600 rounded flex items-center justify-center">
+                        <img src="{{ tkp_data.tkp.img }}" alt="" class="w-14">
+                    </div>
+                    <div class="tkp-generations-results__item-text">
+                        <p class="font-light w-72 ml-4 text-sm">{{ tkp_data.tkp.name }}</p>
+                    </div>
+                    <button class="ml-20 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Скачать ТКП</button>
+                </div>
+                <!-- /.tkp-generations-results__item -->
+            {% endif %}
+
+            {% if tkp_data.build_materials %}
+                {% for build_materials in tkp_data.build_materials %}
+                    <div class="tkp-generations-results__item flex items-center mt-6">
+                        <div class="tkp-generations-results__item-img w-20 h-20 border border-blue-600 rounded flex items-center justify-center">
+                            <img src="/assets/img/tkp/build-task.svg" alt="" class="w-14">
+                        </div>
+                        <div class="tkp-generations-results__item-text">
+                            <p class="font-light w-72 ml-4 text-sm">{{ build_materials.name }}</p>
+                        </div>
+                        <a href="{{ build_materials.path }}"><button class="ml-20 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Скачать С.З</button></a>
+                    </div>
+                    <!-- /.tkp-generations-results__item -->
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- /.tkp-generations-results -->
+
+        <button class="back-step rounded border border-blue-600 text-blue-600 px-5 py-2 mt-8 cursor-pointer hover:bg-blue-600 hover:text-white transition-all duration-300">Назад</button>
+    </div>
+</main>
+
+<div class="add-client-form px-6 py-8 border border-gray-300 rounded-md w-80 hidden" id="add-client-form">
+    <h2 class="text-center text-2xl font-semibold">Добавление нового клиента</h2>
+    <div class="add-client-form__controls">
+        <div class="input-block flex flex-col w-full mt-3">
+            <label for="inn" class="text-sm font-semibold">ИНН</label>
+            <input type="text" name="inn" id="inn" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="4025012510">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корретный инн!</p>
+        </div>
+        <!--/.input-block-->
+
+        <div class="input-block flex flex-col w-full mt-3">
+            <label for="company-name" class="text-sm font-semibold">Название</label>
+            <input type="text" name="company-name" id="company-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="ООО НПП МЕТРА">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректное название!</p>
+        </div>
+        <!--/.input-block-->
+
+        <div class="input-block flex flex-col w-full mt-3">
+            <label for="company-addr" class="text-sm font-semibold">Юр. Адрес</label>
+            <input type="text" name="company-addr" id="company-addr" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Заречная 18В">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректный адрес!</p>
+        </div>
+        <!--/.input-block-->
+
+        <div class="input-block flex flex-col w-full mt-3">
+            <label for="contact-name" class="text-sm font-semibold">ФИО Контактного Лица</label>
+            <input type="text" name="contact-name" id="contact-name" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="Иванов И.И.">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректное ФИО!</p>
+        </div>
+        <!--/.input-block-->
+
+        <div class="input-block flex flex-col w-full mt-3">
+            <label for="contact-phone" class="text-sm font-semibold">Телефон</label>
+            <input type="text" name="contact-phone" id="contact-phone" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="+7(999)999-99-99">
+            <p class="hint text-xs mt-1 text-red-500 hidden">Ошибка! Введите корректный телефон!</p>
+        </div>
+        <!--/.input-block-->
+    </div>
+
+    <button class="mt-6 w-full px-4 bg-blue-600 text-white h-9 rounded hover:bg-blue-800 transition-all duration-300 create-client" data-role="create">Новый клиент</button>
+</div>
+{% endblock %}

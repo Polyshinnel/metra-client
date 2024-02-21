@@ -32,9 +32,11 @@ class TkpRepository implements RepositoryInterface
     public function filteredTkpByChars(int $categoryId, array $tkpParams, array $tkpValues, int $count): ?array {
         return $this->tkp::select(
             'tkp_chars.tkp_id',
-            'tkp.name'
+            'tkp.name',
+            'tkp_categories.img',
         )
             ->leftjoin('tkp_chars','tkp.id','=','tkp_chars.tkp_id')
+            ->leftjoin('tkp_categories','tkp.category_id','=','tkp_categories.id')
             ->where('tkp.category_id',$categoryId)
             ->whereIn('tkp_chars.tkp_param_id',$tkpParams)
             ->whereIn('tkp_chars.value',$tkpValues)
@@ -45,6 +47,18 @@ class TkpRepository implements RepositoryInterface
     }
 
     public function filteredTkp(array $filter): ?array {
-        return $this->tkp::where($filter)->get()->toArrau();
+        return $this->tkp::where($filter)->get()->toArray();
+    }
+
+    public function getTkpById(int $id): ?array {
+        return $this->tkp::select(
+            'tkp.id',
+            'tkp.name',
+            'tkp_categories.img',
+        )
+            ->leftjoin('tkp_categories','tkp.category_id','=','tkp_categories.id')
+            ->where('tkp.id',$id)
+            ->first()
+            ->toArray();
     }
 }
