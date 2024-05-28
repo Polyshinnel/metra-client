@@ -3,6 +3,11 @@
 namespace App\Controllers;
 
 use App\Repository\ClientsRepository;
+use App\Repository\ProductRepository;
+use App\Repository\Tkp\TkpNastilRepository;
+use App\Repository\Tkp\TkpOgradaRepository;
+use App\Repository\Tkp\TkpPandusRepository;
+use App\Repository\Tkp\TkpProductRepository;
 use App\Repository\Tkp\TkpRepository;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -14,9 +19,30 @@ class TkpGenerator
     private TkpRepository $tkpRepository;
     private ClientsRepository $clientsRepository;
 
-    public function __construct(TkpRepository  $tkpRepository, ClientsRepository $clientsRepository) {
+    private ProductRepository $productRepository;
+    private TkpProductRepository $tkpProductRepository;
+    private TkpPandusRepository $tkpPandusRepository;
+    private TkpOgradaRepository $tkpOgradaRepository;
+
+    private TkpNastilRepository $tkpNastilRepository;
+
+    public function __construct(
+        TkpRepository  $tkpRepository,
+        ClientsRepository $clientsRepository,
+        ProductRepository $productRepository,
+        TkpProductRepository $tkpProductRepository,
+        TkpPandusRepository $tkpPandusRepository,
+        TkpOgradaRepository $tkpOgradaRepository,
+        TkpNastilRepository $tkpNastilRepository
+    )
+    {
         $this->tkpRepository = $tkpRepository;
         $this->clientsRepository = $clientsRepository;
+        $this->productRepository = $productRepository;
+        $this->tkpProductRepository = $tkpProductRepository;
+        $this->tkpPandusRepository = $tkpPandusRepository;
+        $this->tkpOgradaRepository = $tkpOgradaRepository;
+        $this->tkpNastilRepository = $tkpNastilRepository;
     }
     public function createTkp($tkpId, $customerId, $installationPlace, $expiredDate) {
         $tkpInfo = $this->tkpRepository->filteredTkp(['id' => $tkpId]);
@@ -37,6 +63,47 @@ class TkpGenerator
                 $templateProcessor->setValue('instalationPlace', $installationPlace);
                 $templateProcessor->setValue('expiredDate', $dateCreate);
                 $templateProcessor->setValue('estimate_date', $expiredDate);
+
+                $tkpProducts = $this->tkpProductRepository->getProducts($tkpId);
+                $tkpNastil = $this->tkpNastilRepository->getProducts($tkpId);
+                $tkpOgrada = $this->tkpOgradaRepository->getProducts($tkpId);
+                $tkpPandus = $this->tkpPandusRepository->getProducts($tkpId);
+
+                $tkpProductsArr = [];
+
+                if($tkpProducts) {
+                    foreach ($tkpProducts as $tkpProduct) {
+                        $productData = $this->productRepository->getFilteredProducts(['id' => $tkpProduct['product_id']]);
+                        $productPrice = $productData[0]['price'];
+                        $productName = $productData[0]['name'];
+                        $tkpProductsArr[] = [
+                            'productName' => $productName,
+                            'productPrice' => $productPrice
+                        ];
+                    }
+                }
+
+                if($tkpNastil) {
+                    $productId = $tkpNastil[0]['product_id'];
+                    $productData = $this->productRepository->getFilteredProducts(['id' => $productId]);
+                    $templateProcessor->setValue('nastilPrice', $productData[0]['price']);
+                }
+
+                if($tkpOgrada) {
+                    $productId = $tkpOgrada[0]['product_id'];
+                    $productData = $this->productRepository->getFilteredProducts(['id' => $productId]);
+                    $templateProcessor->setValue('ogradaPrice', $productData[0]['price']);
+                }
+
+                if($tkpPandus) {
+                    $productId = $tkpOgrada[0]['product_id'];
+                    $productData = $this->productRepository->getFilteredProducts(['id' => $productId]);
+                    $templateProcessor->setValue('pandusPrice', $productData[0]['price']);
+                }
+
+                if($tkpProductsArr) {
+                    $templateProcessor->cloneRowAndSetValues('productName', $tkpProductsArr);
+                }
 
                 $tkpName = explode('/', $tkpPath);
                 $tkpName = array_pop($tkpName);
