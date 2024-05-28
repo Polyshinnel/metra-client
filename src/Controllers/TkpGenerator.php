@@ -24,6 +24,7 @@ class TkpGenerator
             $clientInfo = $this->clientsRepository->getRecordById($customerId);
 
             if($clientInfo) {
+                error_reporting(E_ALL ^ E_WARNING);
                 $customerName = $clientInfo['name'];
                 $tkpData = $tkpInfo[0];
                 $tkpPath = $tkpData['path'];
@@ -31,7 +32,6 @@ class TkpGenerator
                 $tkpPath = $templatePrefix.$tkpPath;
                 $dateCreate = date('d.m.Y');
 
-                Settings::setOutputEscapingEnabled(true);
                 $templateProcessor = new TemplateProcessor($tkpPath);
                 $templateProcessor->setValue('customerName', $customerName);
                 $templateProcessor->setValue('instalationPlace', $installationPlace);

@@ -575,7 +575,7 @@ $('.create_tkp').click(function () {
             'expired_date': expiredDate,
         },
         success: function (data) {
-            console.log(data)
+            window.location.href = data.output;
         }
     })
 })
