@@ -87,5 +87,6 @@ return static function (App $app): void {
         $group->get('/results',[TkpPage::class,'getTkpResults']);
         $group->post('/search',[TkpPage::class,'search']);
         $group->get('/tkp-create/{id}',[TkpPage::class,'getTkp']);
+        $group->post('/generate', [TkpPage::class,'generateTkp']);
     })->add(BasicAuthMiddleware::class);;
 };

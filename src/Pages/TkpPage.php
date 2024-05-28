@@ -7,6 +7,7 @@ namespace App\Pages;
 use App\Controllers\ClientController;
 use App\Controllers\SearchController;
 use App\Controllers\TkpController;
+use App\Controllers\TkpGenerator;
 use App\Controllers\UserController;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -26,13 +27,16 @@ class TkpPage
 
     private ClientController $clientController;
 
+    private TkpGenerator $tkpGenerator;
+
     public function __construct(
         Twig $twig,
         ResponseFactoryInterface $responseFactory,
         UserController $userController,
         TkpController $tkpController,
         SearchController $searchController,
-        ClientController $clientController
+        ClientController $clientController,
+        TkpGenerator $tkpGenerator
     )
     {
         $this->twig = $twig;
@@ -41,6 +45,7 @@ class TkpPage
         $this->tkpController = $tkpController;
         $this->searchController = $searchController;
         $this->clientController = $clientController;
+        $this->tkpGenerator = $tkpGenerator;
     }
 
     public function get(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -149,6 +154,23 @@ class TkpPage
         if(isset($params['query'])) {
             $data = $this->searchController->searchTkp($params['query']);
         }
+        return new Response(
+            200,
+            new Headers(['Content-Type' => 'application/json']),
+            (new StreamFactory())->createStream($data)
+        );
+    }
+
+    public function generateTkp(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $tkp = $this->tkpGenerator->createTkp(
+            $params['tkp_id'],
+            $params['customer_id'],
+            $params['installation_place'],
+            $params['expired_date']
+        );
+        $data = json_encode($tkp, JSON_UNESCAPED_UNICODE);
         return new Response(
             200,
             new Headers(['Content-Type' => 'application/json']),

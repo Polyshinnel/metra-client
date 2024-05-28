@@ -36,14 +36,14 @@
 
 
                 <div class="input-block flex flex-col w-72 mt-3">
-                    <label for="">Место установки</label>
-                    <input type="text" name="" id="" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Красных зорь, д. 13">
+                    <label for="installation_place">Место установки</label>
+                    <input type="text" name="installation_place" id="installation_place" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="г. Обнинск ул. Красных зорь, д. 13">
                 </div>
                 <!--/.input-block-->
 
                 <div class="input-block flex flex-col w-72 mt-3">
-                    <label for="">Дата окончания ТКП</label>
-                    <input type="date" name="" id="" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="13.11.2023">
+                    <label for="expired_date">Дата окончания ТКП</label>
+                    <input type="date" name="expired_date" id="expired_date" class="border border-gray-400 mt-2 h-10 rounded px-3" placeholder="13.11.2023">
                 </div>
                 <!--/.input-block-->
 
@@ -62,7 +62,7 @@
                     <div class="tkp-generations-results__item-text">
                         <p class="font-light w-72 ml-4 text-sm">{{ tkp_data.tkp.name }}</p>
                     </div>
-                    <button class="ml-20 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300">Скачать ТКП</button>
+                    <button class="ml-20 px-4 bg-blue-800 text-white h-9 rounded hover:bg-blue-600 transition-all duration-300 create_tkp" data-item="{{ tkp_data.tkp.id }}">Скачать ТКП</button>
                 </div>
                 <!-- /.tkp-generations-results__item -->
             {% endif %}

@@ -558,3 +558,24 @@ $('.create-tkp-step').click(function () {
     params['tkp_values'] = valArr;
     window.location.href = '/tkp/results?'+$.param(params)
 })
+
+$('.create_tkp').click(function () {
+    let tkpId = $(this).attr('data-item')
+    let customerId = $('.user-clients').val()
+    let installationPlace = $('#installation_place').val()
+    let expiredDate = $('#expired_date').val()
+
+    $.ajax({
+        type: "POST",
+        url: "/tkp/generate",
+        data: {
+            'tkp_id': tkpId,
+            'customer_id': customerId,
+            'installation_place': installationPlace,
+            'expired_date': expiredDate,
+        },
+        success: function (data) {
+            console.log(data)
+        }
+    })
+})

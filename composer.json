@@ -25,6 +25,7 @@
         "monolog/monolog": "^2.8",
         "ext-json": "*",
         "ext-simplexml": "*",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "phpoffice/phpword": "^1.2"
     }
 }
